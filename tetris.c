@@ -55,8 +55,15 @@ init(void)
      current.next = nrand(0, 6);
 
      /* Score */
-     printxy(0, FRAMEH_NB + 2, FRAMEW + 3, "Score:");
-     printxy(0, FRAMEH_NB + 3, FRAMEW + 3, "Lines:");
+     printxy(0, FRAMEH_NB + 2, FRAMEW + 3, "Score :");
+     printxy(0, FRAMEH_NB + 3, FRAMEW + 3, "Lines :");
+     printxy(0, FRAMEH_NB + 4, FRAMEW + 3, "Left  : ←"); 
+     printxy(0, FRAMEH_NB + 5, FRAMEW + 3, "Right : →"); 
+     printxy(0, FRAMEH_NB + 6, FRAMEW + 3, "Change: ↑");
+     printxy(0, FRAMEH_NB + 7, FRAMEW + 3, "Down  : ↓"); 
+     printxy(0, FRAMEH_NB + 8, FRAMEW + 3, "Drop  : Space Bar");
+     printxy(0, FRAMEH_NB + 9, FRAMEW + 3, "Pause : p"); 
+     printxy(0, FRAMEH_NB + 10, FRAMEW + 3, "Quit  : q"); 
      DRAW_SCORE();
 
      /* Init signal */
@@ -93,10 +100,9 @@ get_key_event(void)
      {
      case KEY_MOVE_LEFT:            shape_move(-EXP_FACT);              break;
      case KEY_MOVE_RIGHT:           shape_move(EXP_FACT);               break;
+     case KEY_MOVE_DOWN:            ++current.x; ++score; DRAW_SCORE(); break;
      case KEY_CHANGE_POSITION_NEXT: shape_set_position(N_POS);          break;
-     case KEY_CHANGE_POSITION_PREV: shape_set_position(P_POS);          break;
      case KEY_DROP_SHAPE:           shape_drop();                       break;
-     case KEY_SPEED:                ++current.x; ++score; DRAW_SCORE(); break;
      case KEY_PAUSE:                while(getchar() != KEY_PAUSE);      break;
      case KEY_QUIT:                 running = False;                    break;
      }
