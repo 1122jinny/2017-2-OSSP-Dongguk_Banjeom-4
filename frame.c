@@ -40,32 +40,30 @@
  */
 const int sattr[7][3] = {{0,2}, {-1,0}, {-1,1,1}, {-1,1}, {-1,1}, {0,1}, {0,1}};
 
-void
-frame_init(void)
+void frame_init(void)        //프레임의 색깔지정과 그리기	
 {
      int i;
 
      /* Frame border */
      for(i = 0; i < FRAMEW + 1; ++i)
      {
-          frame[0][i] = Border;
-          frame[FRAMEH][i] = Border;
+          frame[0][i] = Border;         //윗테두리 색깔지정
+          frame[FRAMEH][i] = Border;    //래테두리 색깔지정
      }
      for(i = 0; i < FRAMEH; ++i)
      {
-          frame[i][0] = Border;
-          frame[i][1] = Border;
-          frame[i][FRAMEW] = Border;
-          frame[i][FRAMEW - 1] = Border;
+          frame[i][0] = Border;           //왼쪽 테두리 색깔지정
+          frame[i][1] = Border;           //왼쪽 테두리 색깔지정
+          frame[i][FRAMEW] = Border;      //오른쪽 테두리 색깔지정
+          frame[i][FRAMEW - 1] = Border;  //오른쪽 테두리 색깔지정
      }
 
-     frame_refresh();
+     frame_refresh();     //테두리 그려줌 	
 
      return;
 }
 
-void
-frame_nextbox_init(void)
+void frame_nextbox_init(void)      //다음 나올 모양의 테두리 색깔 지정
 {
      int i;
 
@@ -80,13 +78,12 @@ frame_nextbox_init(void)
      for(i = 0; i < FRAMEW_NB + 1; ++i)
           frame_nextbox[0][i] = frame_nextbox[FRAMEH_NB][i] = Border;
 
-     frame_nextbox_refresh();
+     frame_nextbox_refresh();    //다음나올 상자 
 
      return;
 }
 
-void
-frame_refresh(void)
+void frame_refresh(void)      //테트리스 테두리 
 {
      int i, j;
 
@@ -97,25 +94,25 @@ frame_refresh(void)
 }
 
 void
-frame_nextbox_refresh(void)
+frame_nextbox_refresh(void)       //다음나올 상자와 모양 
 {
      int i, j;
 
-     /* Clean frame_nextbox[][] */
+     /* Clean frame_nextbox[][] */       //테트리스 다음나올 모양상자 안쪽의 값 초기화 (색지정) 
      for(i = 1; i < FRAMEH_NB; ++i)
           for(j = 2; j < FRAMEW_NB - 1; ++j)
                frame_nextbox[i][j] = 0;
 
-     /* Set the shape in the frame */
+     /* Set the shape in the frame */     //다음나올 모양 그려줌 
      for(i = 0; i < 4; ++i)
           for(j = 0; j < EXP_FACT; ++j)
-               frame_nextbox
+               frame_nextbox       //맨앞 숫자는 위치지정, current.next는 0부터 6까지 난수로 모양 지정 
                     [2 + shapes[current.next][sattr[current.next][2]][i][0] + sattr[current.next][0]]
                     [4 + shapes[current.next][sattr[current.next][2]][i][1] * EXP_FACT + j + sattr[current.next][1]]
-                    = current.next + 1;
+                    = current.next + 1;  //다른변수들은 모양 지정 
 
      /* Draw the frame */
-     for(i = 0; i < FRAMEH_NB + 1; ++i)
+     for(i = 0; i < FRAMEH_NB + 1; ++i)              //테트리스 다음나올 모양 테두리 그려줌 
           for(j = 0; j < FRAMEW_NB + 1; ++j)
                printxy(frame_nextbox[i][j], i, j + FRAMEW + 3, " ");
 
