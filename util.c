@@ -36,15 +36,15 @@
 #include "config.h"
 
 void
-clear_term(void)
+clear_term(void)	//스크린을 지우고 커서를  1,1로 옮김(위 왼쪽)
 {
-     puts("\e[2J");	//문자열 출력
+     puts("\e[2J");	
 
      return;
 }
 
 void
-set_cursor(Bool b)	//커서
+set_cursor(Bool b)	//Bool b가 l일 경우 hide cursor, h일 경우 showcursor
 {
      printf("\e[?25%c", ((b) ? 'h' : 'l'));
 
@@ -55,6 +55,8 @@ void
 set_color(int color)	//색을 지정
 {
      int bg = 0, fg = 0;	
+
+	 //bg : backgound, fg : foreground
 
      switch(color)	//각각의 색에 bg를 지정
      {
