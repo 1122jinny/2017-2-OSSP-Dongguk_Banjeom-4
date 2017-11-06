@@ -42,19 +42,19 @@ init(void)
 
      /* Clean term */
      clear_term();
-     set_cursor(False); //이거 알아내야
+     set_cursor(False); //터미널 창의 커서를 숨기는 함수이다. 게임이 끝날 때 다시 true로 지명되어 커서가 되돌아온다
 
      /* Make rand() really random :) */
      srand(getpid());
 
      /* Init variables */
      score = lines = 0;
-     running = True;	//이것이 처음에 스타트랑 연관?
-     current.y = (FRAMEW / 2) - 1; //이거 알아내야됨
+     running = True;	//true일 경우에 게임의 축이 되는 루프가 계속 돌아가고 false일 경우 루프가 break되고 quit함수가 호출되어 종료된다
+     current.y = (FRAMEW / 2) - 1; 
      current.num = nrand(0, 6); //6가지블록랜덤
-     current.next = nrand(0, 6);
+     current.next = nrand(0, 6);//다음 블록의 종류를 정함
 
-     /* Score */
+     /* Score(오른쪽에 표시되는 안내사항을 보여주는 */
      printxy(0, FRAMEH_NB + 2, FRAMEW + 3, "Score :");
      printxy(0, FRAMEH_NB + 3, FRAMEW + 3, "Lines :");
      printxy(0, FRAMEH_NB + 4, FRAMEW + 3, "Left  : ←"); 
@@ -95,7 +95,7 @@ get_key_event(void)
 
      if(c > 0)
           --current.x;
-
+	 /*main함수중에 전체 루프중에 필수적으로 거치는 함수이자 입력받은 값에따라 게임 진행이 된다. 여기서 key_pause와 key_quit는 게임을 계속 진행하는 대에 영향을 준다*/
      switch(c)
      {
      case KEY_MOVE_LEFT:            shape_move(-EXP_FACT);              break;
@@ -113,7 +113,7 @@ get_key_event(void)
 void
 arrange_score(int l)
 {
-     /* Standard score count */
+     /* 클리어한 라인에따라 점수부여. 여기서 의문점이 5줄이상일때 에러가 발생하는지 */
      switch(l)
      {
      case 1: score += 40;   break; /* One line */
@@ -171,10 +171,18 @@ check_possible_pos(int x, int y)
 void
 quit(void)
 {
+	 char end;
      frame_refresh(); /* Redraw a last time the frame */
-     set_cursor(True);
-     tcsetattr(0, TCSANOW, &back_attr);
-     printf("\nBye! Your score: %d\n", score);
+     set_cursor(True); //이 함수로인해 터미널창 커서가 숨김에서 풀린다
+     tcsetattr(0, TCSANOW, &back_attr); //TCSANOW는 즉시속성을 변경을 의미, 
+     printf("\n\n\t수고하셨습니다. 당신의 점수는: %d입니다.\n", score);
+
+	 printf("\n\n\t\t\tpress enter to end the game!");
+	 while (1) {
+		 end = getchar();
+		 if (end == '\n')break;
+	 }
+	 system("clear");
 
      return;
 }
@@ -182,10 +190,17 @@ quit(void)
 int
 main(int argc, char **argv)
 {
+	 char start;
+	 printf("\n\n\t\t\tpress enter to enter game!");
+	 while (1) {
+		 start = getchar();
+		 if (start == '\n')break;
+	 }
+	 system("clear");
      init();
      frame_init();
      frame_nextbox_init();;
-
+	 //여기까지 게임을 초기화하는 부분
      current.last_move = False;
 
      while(running)
@@ -194,9 +209,9 @@ main(int argc, char **argv)
           shape_set();
           frame_refresh();
           shape_go_down();
-     }
+     }//이것이 게임루프의 주축이 되는 부분
 
-     quit();
+     quit(); 
 
      return 0;
 }
