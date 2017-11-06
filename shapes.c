@@ -139,6 +139,12 @@ shape_set(void)
 void
 shape_unset(void)
 {
+     /* 이미 Set되어있는 Shapes를 제거하는 함수
+	(ex) 블록을 모두 채워서 한개의 줄이 사라져야하는 경우
+
+	배열 frame의 모든 속성값을 0으로 설정하여준다.
+	마찬가지로 current.x값이 1보다 작으면 프레임 보더로 인식한다.
+     */
      int i, j;
 
      for(i = 0; i < 4; ++i)
@@ -192,11 +198,21 @@ shape_go_down(void)
 
      /* Fall the shape else; collision with the ground or another shape
       * then stop it and create another */
+
+     /* 
+	생성된 Shapes를 아래로 이동시키는 함수이다.
+	우선 현재 Shape의 위치를 체크하여 이동이 가능한지 파악하고, 가능하면 current.x 값을 1 증가.
+	이동이 불가능한 상태라면 이동을 중지하고 새로운 Shape를 생성한다.
+     */
      if(!check_possible_pos(current.x + 1, current.y))
           ++current.x;
      else
           if(current.x > 2)
                shape_new();
+          /*
+		current.x값이 1이거나 그보다 작다면, Shape가 이동하지 않은 것
+		따라서 게임이 종료된 것으로 간주된다.
+	  */
           else
           {
                shape_new();
@@ -214,10 +230,16 @@ shape_go_down(void)
 void
 shape_set_position(int p)
 {
+     /*
+	현재의 위치를 Old라는 변수에 저장한다 (Temporary)
+     */
      int old = current.pos;
 
      shape_unset();
 
+     /*
+	P값을 현재의 위치로 설정한다
+     */
      current.pos = p ;
 
      if(check_possible_pos(current.x, current.y))
