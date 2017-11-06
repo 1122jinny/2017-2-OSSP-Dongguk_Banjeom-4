@@ -42,16 +42,16 @@ init(void)
 
      /* Clean term */
      clear_term();
-     set_cursor(False);
+     set_cursor(False); //이거 알아내야
 
      /* Make rand() really random :) */
      srand(getpid());
 
      /* Init variables */
      score = lines = 0;
-     running = True;
-     current.y = (FRAMEW / 2) - 1;
-     current.num = nrand(0, 6);
+     running = True;	//이것이 처음에 스타트랑 연관?
+     current.y = (FRAMEW / 2) - 1; //이거 알아내야됨
+     current.num = nrand(0, 6); //6가지블록랜덤
      current.next = nrand(0, 6);
 
      /* Score */
