@@ -186,18 +186,25 @@ quit(void)
 
      return;
 }
-
-int
-main(int argc, char **argv)
+void
+start(void)
 {
 	 char start;
-	 printf("\n\n\t\t\tpress enter to enter game!");
+	 
+	//게임 시작하기 전에 안내를 한번 해줌
+	init();
+	printf("\n\n\n\n\n\n\n\n\t\t\t\press enter to enter game!");	 //tab세번이 적절
 	 while (1) {
 		 start = getchar();
 		 if (start == '\n')break;
 	 }
-	 system("clear");
-     init();
+	 system("clear"); //화면 지
+}
+int
+main(int argc, char **argv)
+{
+     start();
+     init(); //게임 진행중에도 게임 사용법 보여
      frame_init();
      frame_nextbox_init();;
 	 //여기까지 게임을 초기화하는 부분
