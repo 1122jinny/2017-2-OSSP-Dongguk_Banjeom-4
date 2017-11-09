@@ -169,24 +169,6 @@ check_possible_pos(int x, int y)
 }
 
 void
-quit(void)
-{
-	 char end;
-     frame_refresh(); /* Redraw a last time the frame */
-     set_cursor(True); //이 함수로인해 터미널창 커서가 숨김에서 풀린다
-     tcsetattr(0, TCSANOW, &back_attr); //TCSANOW는 즉시속성을 변경을 의미, 
-     printf("\n\n\t수고하셨습니다. 당신의 점수는: %d입니다.\n", score);
-
-	 printf("\n\n\t\t\tpress enter to end the game!");
-	 while (1) {
-		 end = getchar();
-		 if (end == '\n')break;
-	 }
-	 system("clear");
-
-     return;
-}
-void
 start(void)
 {
 	 char start;
@@ -198,8 +180,27 @@ start(void)
 		 start = getchar();
 		 if (start == '\n')break;
 	 }
-	 system("clear"); //화면 지
+	 system("clear"); //화면 지움
 }
+
+void
+quit(void)
+{
+	 char end;
+     frame_refresh(); /* Redraw a last time the frame */
+     set_cursor(True); //이 함수로인해 터미널창 커서가 숨김에서 풀린다
+     tcsetattr(0, TCSANOW, &back_attr); //TCSANOW는 즉시속성을 변경을 의미, 
+     printf("\n\n\t수고하셨습니다. 당신의 점수는: %d입니다.\n", score);
+
+	 printf("\n\n\t\t\tpress enter to end the game!\n아몰랑~~~~~~~~!!");
+	 while (1) {
+		 end = getchar();
+		 if (end == '\n')break;
+	 }
+	 system("clear");
+     return;
+}
+
 int
 main(int argc, char **argv)
 {
@@ -219,6 +220,7 @@ main(int argc, char **argv)
      }//이것이 게임루프의 주축이 되는 부분
 
      quit(); 
+     
 
      return 0;
 }
