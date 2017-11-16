@@ -39,7 +39,7 @@
  */
 
 
-const int shapes[7][4][4][2] =
+const int shapes[8][4][4][2] =
 {
      /* O */
      /* 정사각형 */
@@ -96,6 +96,13 @@ const int shapes[7][4][4][2] =
           {{0,1},{1,1},{1,2},{2,1}},
           {{1,0},{1,1},{1,2},{2,1}},
           {{1,0},{0,1},{1,1},{2,1}}
+     },
+
+     {
+          {{0,1},{1,0},{1,2},{2,1}},
+          {{0,1},{1,0},{1,2},{2,1}},
+          {{0,1},{1,0},{1,2},{2,1}},
+          {{0,1},{1,0},{1,2},{2,1}}
      }
 };
 
@@ -115,14 +122,23 @@ shape_set(void)
 	본 함수에서는 frame[x][y] 배열에 값을 채워넣는다.
 	EXP_FACT = 2이고, 이 값은 frame의 열에 곱해진다.
 	정해진 frame[x][y] 위치에 current.num + 1의 값을 저장한다.
-	current.y = (FRAMEW / 2) - 1, #define FRAMEW (int)(10*2.3)
+	current.y = (FRAMEW / 2) - 1 = 24, #define FRAMEW (int)(10*2.3)
      */
      for(i = 0; i < 4; ++i)
           for(j = 0; j < EXP_FACT; ++j)
-               frame[current.x + shapes[current.num][current.pos][i][0]]
-                    [current.y + shapes[current.num][current.pos][i][1] * EXP_FACT + j]
-                    = current.num + 1;
-
+               frame[current.x + shapes[current.num][current.pos][i][0]] /* 1 + 1 */
+                    [current.y + shapes[current.num][current.pos][i][1] * EXP_FACT + j] /* 24 + 0 * 2 + 0 */
+                    = current.num + 1; /* frame[0~5][0~54] = 0~6 + 1 */
+     /* 
+	Current.num은 현재 블록의 모양을 정의, +1을 해주면 다음 블록 모양
+	Currnet.pos는 현재 블록의 포지션을 정의, 0~3까지의 숫자로 상하좌우를 표현
+	Current.x, Current.y는 정확한 역할을 모르겠음...
+        Current.x값을 지우면 블록이 아래로 내려가지 않음.
+	Current.y값을 지우면 블록이 아래로 내려가지만, 잔상이 남는다.
+	EXP_FACT값을 제외하면 블록이 내려가지않고 게임이 끝남.
+	j값을 제외하면 블록의 모양이 변형됨.
+     */
+	
      /* 
 	current.x의 값이 1보다 작으면
 	배열 frame의 모든 첫번째 행에 Border라는 값을 저장한다.
@@ -176,8 +192,8 @@ shape_new(void)
      current.num = current.next;
      current.x = 1;
      current.y = (FRAMEW / 2) - 1;;
-     current.next = nrand(0, 6);
-     /* 다음 블록을 표시해준느 프레임을 초기화시킨다 */
+     current.next = nrand(0, 7);
+     /* 다음 블록을 표시해주는 프레임을 초기화시킨다 */
      frame_nextbox_refresh();
      /* 
 	current.x 값이 1보다 크면 

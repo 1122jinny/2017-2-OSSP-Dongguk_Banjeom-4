@@ -42,8 +42,8 @@
 #define EXP_FACT 2
 
 /* Frame dimension */
-#define FRAMEW (int)(10*2.3)
-#define FRAMEH (int)(9*2.3)
+#define FRAMEW 23
+#define FRAMEH 20
 #define FRAMEW_NB 15
 #define FRAMEH_NB 5
 
@@ -105,7 +105,7 @@ int check_possible_pos(int, int);
 void get_key_event(void);
 /* Variables */
 
-const int shapes[7][4][4][2];
+const int shapes[8][4][4][2];
 struct itimerval tv;
 struct termios back_attr;
 shape_t current;

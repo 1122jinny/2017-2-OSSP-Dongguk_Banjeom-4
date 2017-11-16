@@ -38,7 +38,7 @@
  * [1]: +y
  * [2]: What shape position choose for a perfect position in the box
  */
-const int sattr[7][3] = {{0,2}, {-1,0}, {-1,1,1}, {-1,1}, {-1,1}, {0,1}, {0,1}};
+const int sattr[8][3] = {{0,2}, {-1,0}, {-1,1,1}, {-1,1}, {-1,1}, {0,1}, {0,1}, {0,2}};
 
 void frame_init(void)        //프레임의 색깔지정과 그리기	
 {
@@ -87,9 +87,10 @@ void frame_refresh(void)      //테트리스 테두리
 {
      int i, j;
 
+
      for(i = 0; i < FRAMEH + 1; ++i)
           for(j = 0; j < FRAMEW + 1; ++j)
-                    printxy(frame[i][j], i, j, " ");
+                    printxy(frame[i][j], i, j, "-");
      return;
 }
 

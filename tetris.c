@@ -51,8 +51,8 @@ init(void)
      score = lines = 0;
      running = True;	//true일 경우에 게임의 축이 되는 루프가 계속 돌아가고 false일 경우 루프가 break되고 quit함수가 호출되어 종료된다
      current.y = (FRAMEW / 2) - 1; 
-     current.num = nrand(0, 6); //6가지블록랜덤
-     current.next = nrand(0, 6);//다음 블록의 종류를 정함
+     current.num = nrand(0, 7); //6가지블록랜덤
+     current.next = nrand(0, 7);//다음 블록의 종류를 정함
 
      /* Score(오른쪽에 표시되는 안내사항을 보여주는 */
      printxy(0, FRAMEH_NB + 2, FRAMEW + 3, "Score :");
@@ -175,7 +175,7 @@ start(void)
 	 
 	//게임 시작하기 전에 안내를 한번 해줌
 	init();
-	printf("\n\n\n\n\n\n\n\n\t\t\t\press enter to enter game!");	 //tab세번이 적절
+	printf("\n\n\n\n\n\n\n\n\t\t\tpress enter to enter game!");	 //tab세번이 적절
 	 while (1) {
 		 start = getchar();
 		 if (start == '\n')break;
