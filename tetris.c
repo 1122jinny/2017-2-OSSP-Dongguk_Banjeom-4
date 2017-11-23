@@ -32,6 +32,7 @@
 
 #include "tetris.h"
 #include "config.h"
+#include <fcntl.h>
 
 /* Functions */
 void
@@ -186,18 +187,35 @@ start(void)
 void
 quit(void)
 {
+  FILE *fp;
+  FILE *wp;
+    fp = fopen ("score.txt","w");
+    wp = fopen ("score.txt","r");
+    int best_sc;
+    fscanf(wp,"%d",&best_sc);
+    fclose(wp);
+    if(best_sc<score) 
+    {
+     fprintf(fp,"%d",score);
+     printf("\n\n\t수고하셨습니다. 최고점수 %d 점을 달성했습니다.\n\n",score);
+   }
+   else
+      {
+       printf("\n\n\t수고하셨습니다. 당신의 점수는: %d입니다.\n\n", score);
+      }
 	 char end;
      frame_refresh(); /* Redraw a last time the frame */
      set_cursor(True); //이 함수로인해 터미널창 커서가 숨김에서 풀린다
      tcsetattr(0, TCSANOW, &back_attr); //TCSANOW는 즉시속성을 변경을 의미, 
-     printf("\n\n\t수고하셨습니다. 당신의 점수는: %d입니다.\n", score);
-
-	 printf("\n\n\t\t\tpress enter to end the game!\n아몰랑~~~~~~~~!!");
+    
+	 printf("\n\n\n\t\t\tpress enter to end the game!\n");
 	 while (1) {
 		 end = getchar();
 		 if (end == '\n')break;
 	 }
-	 system("clear");
+   system("clear");
+   fclose(fp);
+  
      return;
 }
 
