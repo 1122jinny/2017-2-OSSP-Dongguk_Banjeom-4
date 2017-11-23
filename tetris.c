@@ -32,7 +32,11 @@
 
 #include "tetris.h"
 #include "config.h"
+<<<<<<< HEAD
 #include <fcntl.h>
+=======
+#include <OpenAL/al.h>
+>>>>>>> d306b6bdc24f38e20d6aa9fa5e541570cb4562b9
 
 /* Functions */
 void
@@ -43,8 +47,33 @@ init(void)
 
      /* Clean term */
      clear_term();
-     set_cursor(False); //터미널 창의 커서를 숨기는 함수이다. 게임이 끝날 때 다시 true로 지명되어 커서가 되돌아온다
-
+     set_cursor(False);
+     /* Init terminal (for non blocking & noecho getchar();
+      이것을 위로 옮긴 이유는 처음부터 껌벅커서를 지우기 위해*/
+     tcgetattr(STDIN_FILENO, &term);
+     tcgetattr(STDIN_FILENO, &back_attr);
+     term.c_lflag &= ~(ICANON|ECHO);
+     tcsetattr(0, TCSANOW, &term);
+    /*스타트함수를 init에 통합했다*/
+     char start;
+     //set_cursor(False); //커서없애줌
+     printxy(0, FRAMEH_NB + 2, FRAMEW + 3, "Score :");
+     printxy(0, FRAMEH_NB + 3, FRAMEW + 3, "Lines :");
+     printxy(0, FRAMEH_NB + 4, FRAMEW + 3, "Left  : ←"); 
+     printxy(0, FRAMEH_NB + 5, FRAMEW + 3, "Right : →"); 
+     printxy(0, FRAMEH_NB + 6, FRAMEW + 3, "Change: ↑");
+     printxy(0, FRAMEH_NB + 7, FRAMEW + 3, "Down  : ↓"); 
+     printxy(0, FRAMEH_NB + 8, FRAMEW + 3, "Drop  : Space Bar");
+     printxy(0, FRAMEH_NB + 9, FRAMEW + 3, "Pause : p"); 
+     printxy(0, FRAMEH_NB + 10, FRAMEW + 3, "Quit  : q"); 
+    //게임 시작하기 전에 안내를 한번 해줌
+    
+    printf("\n\n\t\t\tpress enter to enter game!");	 //tab세번이 적절
+     while (1) {
+       start = getchar();
+       if (start == '\n')break;
+     }
+     clear_term(); //화면 지움
      /* Make rand() really random :) */
      srand(getpid());
 
@@ -80,11 +109,7 @@ init(void)
      tv.it_value.tv_usec = TIMING;
      sig_handler(SIGALRM);
 
-     /* Init terminal (for non blocking & noecho getchar(); */
-     tcgetattr(STDIN_FILENO, &term);
-     tcgetattr(STDIN_FILENO, &back_attr);
-     term.c_lflag &= ~(ICANON|ECHO);
-     tcsetattr(0, TCSANOW, &term);
+     
 
      return;
 }
@@ -170,21 +195,6 @@ check_possible_pos(int x, int y)
 }
 
 void
-start(void)
-{
-	 char start;
-	 
-	//게임 시작하기 전에 안내를 한번 해줌
-	init();
-	printf("\n\n\n\n\n\n\n\n\t\t\tpress enter to enter game!");	 //tab세번이 적절
-	 while (1) {
-		 start = getchar();
-		 if (start == '\n')break;
-	 }
-	 system("clear"); //화면 지움
-}
-
-void
 quit(void)
 {
   FILE *fp;
@@ -205,6 +215,7 @@ quit(void)
       }
 	 char end;
      frame_refresh(); /* Redraw a last time the frame */
+<<<<<<< HEAD
      set_cursor(True); //이 함수로인해 터미널창 커서가 숨김에서 풀린다
      tcsetattr(0, TCSANOW, &back_attr); //TCSANOW는 즉시속성을 변경을 의미, 
     
@@ -216,13 +227,25 @@ quit(void)
    system("clear");
    fclose(fp);
   
+=======
+     
+     printf("\n\n\t수고하셨습니다. 당신의 점수는: %d입니다.\n", score);
+
+	 printf("\n\n\t\t\tpress enter to end the game!\n");
+	 while (1) {
+		 end = getchar();
+		 if (end == '\n')break;
+   }
+   set_cursor(True); 
+   tcsetattr(0, TCSANOW, &back_attr); //TCSANOW는 즉시속성을 변경을 의미, 터미널 세팅을 되돌리기
+    system("clear"); //입력창이 다 밑으로 내려가서 이걸로하면 다시위로감
+>>>>>>> d306b6bdc24f38e20d6aa9fa5e541570cb4562b9
      return;
 }
 
 int
 main(int argc, char **argv)
 {
-     start();
      init(); //게임 진행중에도 게임 사용법 보여
      frame_init();
      frame_nextbox_init();;
