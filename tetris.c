@@ -172,15 +172,24 @@ void
 start(void)
 {
 	 char start;
-	 
+   set_cursor(False); //커서없애줌
+   printxy(0, FRAMEH_NB + 2, FRAMEW + 3, "Score :");
+   printxy(0, FRAMEH_NB + 3, FRAMEW + 3, "Lines :");
+   printxy(0, FRAMEH_NB + 4, FRAMEW + 3, "Left  : ←"); 
+   printxy(0, FRAMEH_NB + 5, FRAMEW + 3, "Right : →"); 
+   printxy(0, FRAMEH_NB + 6, FRAMEW + 3, "Change: ↑");
+   printxy(0, FRAMEH_NB + 7, FRAMEW + 3, "Down  : ↓"); 
+   printxy(0, FRAMEH_NB + 8, FRAMEW + 3, "Drop  : Space Bar");
+   printxy(0, FRAMEH_NB + 9, FRAMEW + 3, "Pause : p"); 
+   printxy(0, FRAMEH_NB + 10, FRAMEW + 3, "Quit  : q"); 
 	//게임 시작하기 전에 안내를 한번 해줌
-	init();
-	printf("\n\n\n\n\n\n\n\n\t\t\tpress enter to enter game!");	 //tab세번이 적절
+	
+	printf("\n\n\t\t\tpress enter to enter game!");	 //tab세번이 적절
 	 while (1) {
 		 start = getchar();
 		 if (start == '\n')break;
 	 }
-	 system("clear"); //화면 지움
+	 clear_term(); //화면 지움
 }
 
 void
@@ -192,12 +201,12 @@ quit(void)
      tcsetattr(0, TCSANOW, &back_attr); //TCSANOW는 즉시속성을 변경을 의미, 
      printf("\n\n\t수고하셨습니다. 당신의 점수는: %d입니다.\n", score);
 
-	 printf("\n\n\t\t\tpress enter to end the game!\n아몰랑~~~~~~~~!!");
+	 printf("\n\n\t\t\tpress enter to end the game!\n");
 	 while (1) {
 		 end = getchar();
 		 if (end == '\n')break;
 	 }
-	 system("clear");
+    system("clear"); //입력창이 다 밑으로 내려가서 이걸로하면 다시위로감
      return;
 }
 
