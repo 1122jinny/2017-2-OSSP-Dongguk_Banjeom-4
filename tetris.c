@@ -198,12 +198,10 @@ void
 quit(void)
 {
   FILE *fp;
-  FILE *wp;
-    fp = fopen ("score.txt","w");
-    wp = fopen ("score.txt","r");
+    fp = fopen ("score.txt","w+");
     int best_sc;
-    fscanf(wp,"%d",&best_sc);
-    fclose(wp);
+    fscanf(fp,"%d",&best_sc);
+    fclose(fp);
     if(best_sc<score) 
     {
      fprintf(fp,"%d",score);
