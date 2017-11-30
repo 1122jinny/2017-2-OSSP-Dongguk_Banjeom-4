@@ -33,6 +33,8 @@
 #include "tetris.h"
 #include "config.h"
 #include <fcntl.h>
+#include "fmod_studio.h"
+#include "fmod.h"
 
 /* Functions */
 void
@@ -224,8 +226,6 @@ quit(void)
 	 }
    system("clear");
   
-<<<<<<< HEAD
-//=======
      
      printf("\n\n\t수고하셨습니다. 당신의 점수는: %d입니다.\n", score);
 
