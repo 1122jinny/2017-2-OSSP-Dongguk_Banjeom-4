@@ -32,6 +32,7 @@
 
 #include "tetris.h"
 #include "config.h"
+#include <fcntl.h>
 
 /* Functions */
 void
@@ -192,19 +193,35 @@ check_possible_pos(int x, int y)
 void
 quit(void)
 {
+  FILE *rp;
+    rp = fopen ("score.txt","r");
+    int best_sc;
+    fscanf(rp,"%d",&best_sc);
+  FILE *wp;
+    wp = fopen ("score.txt","w");
+    if(best_sc<score)
+    {
+     fprintf(wp,"%d",score);
+     printf("\n\n\t수고하셨습니다. 최고점수 %d 점을 달성했습니다.\n\n",score);
+    }
+   else
+      {
+       printf("\n\n\t수고하셨습니다. 당신의 점수는: %d입니다.\n\n", score);
+      }
+      fclose(rp);
+      fclose(wp);
 	 char end;
      frame_refresh(); /* Redraw a last time the frame */
-     
-     printf("\n\n\t수고하셨습니다. 당신의 점수는: %d입니다.\n", score);
-
-	 printf("\n\n\t\t\tpress enter to end the game!\n");
+     set_cursor(True); //이 함수로인해 터미널창 커서가 숨김에서 풀린다
+     tcsetattr(0, TCSANOW, &back_attr); //TCSANOW는 즉시속성을 변경을 의미, 
+    
+	 printf("\n\n\n\t\t\tpress enter to end the game!\n");
 	 while (1) {
 		 end = getchar();
 		 if (end == '\n')break;
-   }
-   set_cursor(True); 
-   tcsetattr(0, TCSANOW, &back_attr); //TCSANOW는 즉시속성을 변경을 의미, 터미널 세팅을 되돌리기
-    system("clear"); //입력창이 다 밑으로 내려가서 이걸로하면 다시위로감
+	 }
+   system("clear");
+  
      return;
 }
 
