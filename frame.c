@@ -38,7 +38,7 @@
  * [1]: +y
  * [2]: What shape position choose for a perfect position in the box
  */
-const int sattr[9][3] = {{0,2}, {-1,0}, {-1,1,1}, {-1,1}, {-1,1}, {0,1}, {0,1}, {0,2}, {-1,0}};
+const int sattr[8][3] = {{0,2}, {-1,0}, {-1,1,1}, {-1,1}, {-1,1}, {0,1}, {0,1}, {0,2}};
 
 void frame_init(void)        //프레임의 색깔지정과 그리기	
 {
@@ -90,12 +90,7 @@ void frame_refresh(void)      //테트리스 테두리
 
      for(i = 0; i < FRAMEH + 1; ++i)
           for(j = 0; j < FRAMEW + 1; ++j)
-          {
-               if(j%2 == 1)
-               printxy(frame[i][j], i, j, "]");
-	       else
-               printxy(frame[i][j], i, j, "[");
-          }
+                    printxy(frame[i][j], i, j, "-");
      return;
 }
 
@@ -110,7 +105,7 @@ frame_nextbox_refresh(void)       //다음나올 상자와 모양
                frame_nextbox[i][j] = 0;
 
      /* Set the shape in the frame */     //다음나올 모양 그려줌 
-     for(i = 0; i < 5; ++i)
+     for(i = 0; i < 4; ++i)
           for(j = 0; j < EXP_FACT; ++j)
                frame_nextbox       //맨앞 숫자는 위치지정, current.next는 0부터 6까지 난수로 모양 지정 
                     [2 + shapes[current.next][sattr[current.next][2]][i][0] + sattr[current.next][0]]
@@ -120,12 +115,8 @@ frame_nextbox_refresh(void)       //다음나올 상자와 모양
      /* Draw the frame */
      for(i = 0; i < FRAMEH_NB + 1; ++i)              //테트리스 다음나올 모양 테두리 그려줌 
           for(j = 0; j < FRAMEW_NB + 1; ++j)
-          {
-               if(j%2 == 1)
-               printxy(frame_nextbox[i][j], i, j + FRAMEW + 3, "[");
-	       else
-               printxy(frame_nextbox[i][j], i, j + FRAMEW + 3, "]");
-          }
+               printxy(frame_nextbox[i][j], i, j + FRAMEW + 3, " ");
+
      return;
 }
 

@@ -35,9 +35,24 @@
 #include <fcntl.h>
 
 /* Functions */
+
+char* first(char * name)
+{
+  
+  char start;
+  printf("\n\n\t당신의 이름은? ");
+  scanf("%s",name);
+  printf("\n\n\t\t\tpress enter to enter game!");	 //tab세번이 적절
+  while (1) {
+    start = getchar();
+    if (start == '\n')break;
+  }
+  return name;
+}
 void
 init(void)
 {
+  
      struct sigaction siga;
      struct termios term;
 
@@ -51,7 +66,6 @@ init(void)
      term.c_lflag &= ~(ICANON|ECHO);
      tcsetattr(0, TCSANOW, &term);
     /*스타트함수를 init에 통합했다*/
-     char start;
      //set_cursor(False); //커서없애줌
      printxy(0, FRAMEH_NB + 2, FRAMEW + 3, "Score :");
      printxy(0, FRAMEH_NB + 3, FRAMEW + 3, "Lines :");
@@ -64,11 +78,10 @@ init(void)
      printxy(0, FRAMEH_NB + 10, FRAMEW + 3, "Quit  : q"); 
     //게임 시작하기 전에 안내를 한번 해줌
     
-    printf("\n\n\t\t\tpress enter to enter game!");	 //tab세번이 적절
-     while (1) {
-       start = getchar();
-       if (start == '\n')break;
-     }
+ 
+  
+
+    
      clear_term(); //화면 지움
      /* Make rand() really random :) */
      srand(getpid());
@@ -192,7 +205,7 @@ check_possible_pos(int x, int y)
 }
 
 void
-quit(void)
+quit(char * name)
 {
   FILE *rp;
     rp = fopen ("score.txt","r");
@@ -200,34 +213,31 @@ quit(void)
     fscanf(rp,"%d",&best_sc);
   FILE *wp;
     wp = fopen ("score.txt","w");
-    if(best_sc<score)
-    {
-     fprintf(wp,"%d",score);
-     printf("\n\n\t수고하셨습니다. 최고점수 %d 점을 달성했습니다.\n\n",score);
-    }
-   else
-      {
-       printf("\n\n\t수고하셨습니다. 당신의 점수는: %d입니다.\n\n", score);
-      }
-      fclose(rp);
-      fclose(wp);
+
 	 char end;
      frame_refresh(); /* Redraw a last time the frame */
 
      set_cursor(True); //이 함수로인해 터미널창 커서가 숨김에서 풀린다
      tcsetattr(0, TCSANOW, &back_attr); //TCSANOW는 즉시속성을 변경을 의미, 
-    
+  
+     if(best_sc<score)
+     {
+      
+      fprintf(wp,"%d %s",score,name);
+      printf("\n\n\t축하합니다. %s님이 최고점수 %d 점을 달성했습니다.\n\n",name,score);
+     }
+    else
+       {
+        printf("\n\n\t수고하셨습니다. %s님의 점수는: %d입니다.\n\n",name, score);
+       }
+       fclose(rp);
+       fclose(wp);
 	 printf("\n\n\n\t\t\tpress enter to end the game!\n");
 	 while (1) {
 		 end = getchar();
 		 if (end == '\n')break;
 	 }
-   system("clear");
-  
-<<<<<<< HEAD
-//=======
-     
-     printf("\n\n\t수고하셨습니다. 당신의 점수는: %d입니다.\n", score);
+   system("clear"); 
 
 	 printf("\n\n\t\t\tpress enter to end the game!\n");
 	 while (1) {
@@ -245,6 +255,8 @@ quit(void)
 int
 main(int argc, char **argv)
 {
+     char myname[10];
+     first(myname);
      init(); //게임 진행중에도 게임 사용법 보여
      frame_init();
      frame_nextbox_init();;
@@ -259,7 +271,7 @@ main(int argc, char **argv)
           shape_go_down();
      }//이것이 게임루프의 주축이 되는 부분
 
-     quit(); 
+     quit(myname); 
      
 
      return 0;
