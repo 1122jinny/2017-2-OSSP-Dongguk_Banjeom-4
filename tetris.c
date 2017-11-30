@@ -33,6 +33,8 @@
 #include "tetris.h"
 #include "config.h"
 #include <fcntl.h>
+#include "fmod_studio.h"
+#include "fmod.h"
 
 /* Functions */
 
@@ -237,7 +239,14 @@ quit(char * name)
 		 end = getchar();
 		 if (end == '\n')break;
 	 }
+<<<<<<< HEAD
    system("clear"); 
+=======
+   system("clear");
+  
+     
+     printf("\n\n\t수고하셨습니다. 당신의 점수는: %d입니다.\n", score);
+>>>>>>> 8c0db59ea832f431cfc9670b204bbd4c88ed9418
 
 	 printf("\n\n\t\t\tpress enter to end the game!\n");
 	 while (1) {
