@@ -37,6 +37,8 @@
 #include <signal.h>
 #include <termios.h>
 #include <sys/time.h>
+#include <AL/al.h>
+#include <AL/alut.h>
 
 /* Expension factor of shapes */
 #define EXP_FACT 2
