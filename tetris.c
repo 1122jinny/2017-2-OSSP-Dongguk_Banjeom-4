@@ -32,15 +32,7 @@
 
 #include "tetris.h"
 #include "config.h"
-<<<<<<< HEAD
-//<<<<<<< HEAD
-//#include <fcntl.h>
-//======
-//#include <OpenAL/al.h>
-//>>>>>>> d306b6bdc24f38e20d6aa9fa5e541570cb4562b9
-=======
 #include <fcntl.h>
->>>>>>> 5bfa4e1b6265898a3b3c2add0aab2b07a3823745
 
 /* Functions */
 void
@@ -125,7 +117,8 @@ get_key_event(void)
 
      if(c > 0)
           --current.x;
-	 /*main함수중에 전체 루프중에 필수적으로 거치는 함수이자 입력받은 값에따라 게임 진행이 된다. 여기서 key_pause와 key_quit는 게임을 계속 진행하는 대에 영향을 준다*/
+	 /*main함수중에 전체 루프중에 필수적으로 거치는 함수이자 입력받은 값에따라 게임 진행이 된다.
+    여기서 key_pause와 key_quit는 게임을 계속 진행하는 대에 영향을 준다*/
      switch(c)
      {
      case KEY_MOVE_LEFT:            shape_move(-EXP_FACT);              break;
@@ -220,10 +213,7 @@ quit(void)
       fclose(wp);
 	 char end;
      frame_refresh(); /* Redraw a last time the frame */
-<<<<<<< HEAD
-//<<<<<<< HEAD
-=======
->>>>>>> 5bfa4e1b6265898a3b3c2add0aab2b07a3823745
+
      set_cursor(True); //이 함수로인해 터미널창 커서가 숨김에서 풀린다
      tcsetattr(0, TCSANOW, &back_attr); //TCSANOW는 즉시속성을 변경을 의미, 
     
@@ -247,9 +237,8 @@ quit(void)
    set_cursor(True); 
    tcsetattr(0, TCSANOW, &back_attr); //TCSANOW는 즉시속성을 변경을 의미, 터미널 세팅을 되돌리기
     system("clear"); //입력창이 다 밑으로 내려가서 이걸로하면 다시위로감
-//>>>>>>> d306b6bdc24f38e20d6aa9fa5e541570cb4562b9
-=======
->>>>>>> 5bfa4e1b6265898a3b3c2add0aab2b07a3823745
+
+
      return;
 }
 
