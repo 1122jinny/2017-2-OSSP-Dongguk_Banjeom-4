@@ -32,7 +32,15 @@
 
 #include "tetris.h"
 #include "config.h"
+<<<<<<< HEAD
+//<<<<<<< HEAD
+//#include <fcntl.h>
+//======
+//#include <OpenAL/al.h>
+//>>>>>>> d306b6bdc24f38e20d6aa9fa5e541570cb4562b9
+=======
 #include <fcntl.h>
+>>>>>>> 5bfa4e1b6265898a3b3c2add0aab2b07a3823745
 
 /* Functions */
 void
@@ -77,7 +85,7 @@ init(void)
      score = lines = 0;
      running = True;	//true일 경우에 게임의 축이 되는 루프가 계속 돌아가고 false일 경우 루프가 break되고 quit함수가 호출되어 종료된다
      current.y = (FRAMEW / 2) - 1; 
-     current.num = nrand(0, 7); //6가지블록랜덤
+     current.num = nrand(0, 7); //7가지블록랜덤
      current.next = nrand(0, 7);//다음 블록의 종류를 정함
 
      /* Score(오른쪽에 표시되는 안내사항을 보여주는 */
@@ -181,7 +189,7 @@ check_possible_pos(int x, int y)
 {
      int i, j, c = 0;
 
-     for(i = 0; i < 4; ++i)
+     for(i = 0; i < 5; ++i)
           for(j = 0; j < EXP_FACT; ++j)
                if(frame[x + shapes[current.num][current.pos][i][0]]
                   [y + shapes[current.num][current.pos][i][1] * EXP_FACT + j] != 0)
@@ -212,6 +220,10 @@ quit(void)
       fclose(wp);
 	 char end;
      frame_refresh(); /* Redraw a last time the frame */
+<<<<<<< HEAD
+//<<<<<<< HEAD
+=======
+>>>>>>> 5bfa4e1b6265898a3b3c2add0aab2b07a3823745
      set_cursor(True); //이 함수로인해 터미널창 커서가 숨김에서 풀린다
      tcsetattr(0, TCSANOW, &back_attr); //TCSANOW는 즉시속성을 변경을 의미, 
     
@@ -222,6 +234,22 @@ quit(void)
 	 }
    system("clear");
   
+<<<<<<< HEAD
+//=======
+     
+     printf("\n\n\t수고하셨습니다. 당신의 점수는: %d입니다.\n", score);
+
+	 printf("\n\n\t\t\tpress enter to end the game!\n");
+	 while (1) {
+		 end = getchar();
+		 if (end == '\n')break;
+   }
+   set_cursor(True); 
+   tcsetattr(0, TCSANOW, &back_attr); //TCSANOW는 즉시속성을 변경을 의미, 터미널 세팅을 되돌리기
+    system("clear"); //입력창이 다 밑으로 내려가서 이걸로하면 다시위로감
+//>>>>>>> d306b6bdc24f38e20d6aa9fa5e541570cb4562b9
+=======
+>>>>>>> 5bfa4e1b6265898a3b3c2add0aab2b07a3823745
      return;
 }
 

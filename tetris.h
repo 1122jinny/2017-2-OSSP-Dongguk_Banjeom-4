@@ -45,7 +45,7 @@
 #define FRAMEW 23
 #define FRAMEH 20
 #define FRAMEW_NB 15
-#define FRAMEH_NB 5
+#define FRAMEH_NB 7
 
 /* Shapes position */
 #define N_POS ((current.pos < 3) ? current.pos + 1 : 0)
@@ -105,12 +105,12 @@ int check_possible_pos(int, int);
 void get_key_event(void);
 /* Variables */
 
-const int shapes[8][4][4][2];
+const int shapes[9][4][5][2];
 struct itimerval tv;
 struct termios back_attr;
 shape_t current;
 int frame[FRAMEH + 1][FRAMEW + 1];
-int frame_nextbox[FRAMEH_NB][FRAMEW_NB];
+int frame_nextbox[FRAMEH_NB + 1][FRAMEW_NB + 1];
 int score;
 int lines;
 Bool running;
