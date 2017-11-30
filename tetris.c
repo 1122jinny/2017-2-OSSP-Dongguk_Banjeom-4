@@ -32,11 +32,15 @@
 
 #include "tetris.h"
 #include "config.h"
+<<<<<<< HEAD
 //<<<<<<< HEAD
 //#include <fcntl.h>
 //======
 //#include <OpenAL/al.h>
 //>>>>>>> d306b6bdc24f38e20d6aa9fa5e541570cb4562b9
+=======
+#include <fcntl.h>
+>>>>>>> 5bfa4e1b6265898a3b3c2add0aab2b07a3823745
 
 /* Functions */
 void
@@ -197,25 +201,29 @@ check_possible_pos(int x, int y)
 void
 quit(void)
 {
-  FILE *fp;
-  FILE *wp;
-    fp = fopen ("score.txt","w");
-    wp = fopen ("score.txt","r");
+  FILE *rp;
+    rp = fopen ("score.txt","r");
     int best_sc;
-    fscanf(wp,"%d",&best_sc);
-    fclose(wp);
-    if(best_sc<score) 
+    fscanf(rp,"%d",&best_sc);
+  FILE *wp;
+    wp = fopen ("score.txt","w");
+    if(best_sc<score)
     {
-     fprintf(fp,"%d",score);
+     fprintf(wp,"%d",score);
      printf("\n\n\t수고하셨습니다. 최고점수 %d 점을 달성했습니다.\n\n",score);
-   }
+    }
    else
       {
        printf("\n\n\t수고하셨습니다. 당신의 점수는: %d입니다.\n\n", score);
       }
+      fclose(rp);
+      fclose(wp);
 	 char end;
      frame_refresh(); /* Redraw a last time the frame */
+<<<<<<< HEAD
 //<<<<<<< HEAD
+=======
+>>>>>>> 5bfa4e1b6265898a3b3c2add0aab2b07a3823745
      set_cursor(True); //이 함수로인해 터미널창 커서가 숨김에서 풀린다
      tcsetattr(0, TCSANOW, &back_attr); //TCSANOW는 즉시속성을 변경을 의미, 
     
@@ -225,8 +233,8 @@ quit(void)
 		 if (end == '\n')break;
 	 }
    system("clear");
-   fclose(fp);
   
+<<<<<<< HEAD
 //=======
      
      printf("\n\n\t수고하셨습니다. 당신의 점수는: %d입니다.\n", score);
@@ -240,6 +248,8 @@ quit(void)
    tcsetattr(0, TCSANOW, &back_attr); //TCSANOW는 즉시속성을 변경을 의미, 터미널 세팅을 되돌리기
     system("clear"); //입력창이 다 밑으로 내려가서 이걸로하면 다시위로감
 //>>>>>>> d306b6bdc24f38e20d6aa9fa5e541570cb4562b9
+=======
+>>>>>>> 5bfa4e1b6265898a3b3c2add0aab2b07a3823745
      return;
 }
 
