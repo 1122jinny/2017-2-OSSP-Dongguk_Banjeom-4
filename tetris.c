@@ -32,7 +32,6 @@
 
 #include "tetris.h"
 #include "config.h"
-#include <OpenAL/al.h>
 
 /* Functions */
 void
