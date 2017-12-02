@@ -37,8 +37,8 @@
 #include <signal.h>
 #include <termios.h>
 #include <sys/time.h>
-#include <AL/al.h>
-#include <AL/alut.h>
+// #include <AL/al.h>
+// #include <AL/alut.h>
 
 
 /* Expension factor of shapes */
@@ -47,8 +47,8 @@
 /* Frame dimension */
 #define FRAMEW 23
 #define FRAMEH 20
-#define FRAMEW_NB 15
-#define FRAMEH_NB 5
+#define FRAMEW_NB 16
+#define FRAMEH_NB 6
 
 /* Shapes position */
 #define N_POS ((current.pos < 3) ? current.pos + 1 : 0)
@@ -74,7 +74,7 @@ typedef struct
 } shape_t;
 
 /* Color enum */
-enum { Black, Blue, Red, Magenta, White, Green, Cyan, Yellow, Border, Score, ColLast };
+enum { Black, Blue, Red, Magenta, White, Green, Cyan, Yellow, Test, Border, Score, ColLast };
 
 /* Prototypes */
 

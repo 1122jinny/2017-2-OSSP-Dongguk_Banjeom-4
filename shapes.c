@@ -195,11 +195,11 @@ shape_new(void)
      /*
         next 값을 num으로 넘겨 다음 Shape를 설정한다.
         새로운 Shape를 만드는 함수이기 때문에 current.x값을 1로 설정해준다.
-        다음 next 값은 0~6 사이의 무작위 정수로 설정된다.
+        다음 next 값은 0~7 사이의 무작위 정수로 설정된다.
      */
      current.num = current.next;
-     current.x = 1;
-     current.y = (FRAMEW / 2) - 1;;
+     current.x = 1; // 새로운 블록이 생성되는 위치
+     current.y = (FRAMEW / 2) - 1;
      current.next = nrand(0, 7);
      // current.next = nrand(0, 8);을 하면 투명 블록이 생성된다.
      /* 다음 블록을 표시해주는 프레임을 초기화시킨다 */
@@ -214,7 +214,6 @@ shape_new(void)
 
      return;
 }
-
 void
 shape_go_down(void)
 {
