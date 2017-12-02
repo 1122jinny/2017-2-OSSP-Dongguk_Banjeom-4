@@ -33,8 +33,9 @@
 #include "tetris.h"
 #include "config.h"
 #include <fcntl.h>
-// #include "fmod_studio.h"
-// #include "fmod.h"
+//#include "fmod_studio.h"
+//#include "fmod.h"
+//오류떠서 주석처리했습니다.
 
 /* Functions */
 
@@ -69,6 +70,7 @@ init(void)
      tcsetattr(0, TCSANOW, &term);
     /*스타트함수를 init에 통합했다*/
      //set_cursor(False); //커서없애줌
+ 
      printxy(0, FRAMEH_NB + 2, FRAMEW + 3, "Score :");
      printxy(0, FRAMEH_NB + 3, FRAMEW + 3, "Lines :");
      printxy(0, FRAMEH_NB + 4, FRAMEW + 3, "Left  : ←"); 
@@ -96,6 +98,7 @@ init(void)
      current.next = nrand(0, 7);//다음 블록의 종류를 정함
 
      /* Score(오른쪽에 표시되는 안내사항을 보여주는 */
+     printxy(0, FRAMEH_NB + 1, FRAMEW + 3, "Level :");
      printxy(0, FRAMEH_NB + 2, FRAMEW + 3, "Score :");
      printxy(0, FRAMEH_NB + 3, FRAMEW + 3, "Lines :");
      printxy(0, FRAMEH_NB + 4, FRAMEW + 3, "Left  : ←"); 
@@ -151,7 +154,8 @@ get_key_event(void)
 void
 arrange_score(int l)
 {
-     /* 클리어한 라인에따라 점수부여. 여기서 의문점이 5줄이상일때 에러가 발생하는지 */
+     /* 클리어한 라인에따라 점수부여. 여기서 의문점이 5줄이상일때 에러가 발생하는지
+     테트리스는 5줄이상 못깹니다.  */
      switch(l)
      {
      case 1: score += 40;   break; /* One line */
@@ -160,6 +164,15 @@ arrange_score(int l)
      case 4: score += 1200; break; /* Four lines */
      }
 
+     
+     if (score >=100)  //레벨 추가
+      level++;
+     else if (score >=400)
+      level++;
+     else if (score >=700)
+      level++;
+     else if (score >= 1000)
+      level ++;
      lines += l;
 
      DRAW_SCORE();
@@ -239,14 +252,7 @@ quit(char * name)
 		 end = getchar();
 		 if (end == '\n')break;
 	 }
-
    system("clear"); 
-
-   system("clear");
-  
-     
-     printf("\n\n\t수고하셨습니다. 당신의 점수는: %d입니다.\n", score);
-
 
 	 printf("\n\n\t\t\tpress enter to end the game!\n");
 	 while (1) {
@@ -264,6 +270,7 @@ quit(char * name)
 int
 main(int argc, char **argv)
 {
+  level = 1;
      char myname[10];
      first(myname);
      init(); //게임 진행중에도 게임 사용법 보여

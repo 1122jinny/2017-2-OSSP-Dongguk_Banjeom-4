@@ -55,7 +55,8 @@
 #define P_POS ((current.pos > 0) ? current.pos - 1 : 3)
 
 /* Draw the score.. */
-#define DRAW_SCORE() set_color(Score);                             \
+#define DRAW_SCORE() set_color(Score);                              \
+     printf("\033[%d;%dH %d", FRAMEH_NB + 2, FRAMEW + 10, level);   \
      printf("\033[%d;%dH %d", FRAMEH_NB + 3, FRAMEW + 10, score);   \
      printf("\033[%d;%dH %d", FRAMEH_NB + 4, FRAMEW + 10, lines);   \
      set_color(0);
@@ -116,6 +117,8 @@ int frame[FRAMEH + 1][FRAMEW + 1];
 int frame_nextbox[FRAMEH_NB][FRAMEW_NB];
 int score;
 int lines;
+int level;
+
 Bool running;
 
 
