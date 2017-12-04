@@ -67,7 +67,7 @@ void frame_nextbox_init(void)      //다음 나올 모양의 테두리 색깔 �
 {
      int i;
 
-     for(i = 0; i < FRAMEH_NB; ++i)
+     for(i = 0; i < FRAMEH_NB; ++i)  
      {
           frame_nextbox[i][0] = Border;
           frame_nextbox[i][1] = Border;
@@ -75,6 +75,9 @@ void frame_nextbox_init(void)      //다음 나올 모양의 테두리 색깔 �
           frame_nextbox[i][FRAMEW_NB] = Border;
 
      }
+     /*border는 색이름이고 nextbox의 테두리의 색깔을 입히는 함수이다. 
+       
+     */
      for(i = 0; i < FRAMEW_NB + 1; ++i)
           frame_nextbox[0][i] = frame_nextbox[FRAMEH_NB][i] = Border;
 

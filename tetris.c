@@ -148,6 +148,7 @@ get_key_event(void)
      case KEY_PAUSE:                while(getchar() != KEY_PAUSE);      break;
      case KEY_QUIT:                 running = False;                    break;
      case 'Q':                      running = False;                    break; //대문자 Q를 사용할 때 종료
+     case 't':                      sleep(5);                         break; //5초 정지 
      }
 
      return;
@@ -285,10 +286,12 @@ main(int argc, char **argv)
      {
       get_key_event();
       shape_set();
-      frame_refresh();
+      if(level<5)       //레벨 5가 되면 블록이 안보임
+        frame_refresh();
       shape_go_down();
+      if(level==5)
+        printxy(0, FRAMEH_NB + 11, FRAMEW + 3, "***블록이 안보입니다***");
      }//이것이 게임루프의 주축이 되는 부분
-    
      quit(myname); 
      
 

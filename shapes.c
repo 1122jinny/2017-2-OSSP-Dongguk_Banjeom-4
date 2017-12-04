@@ -302,7 +302,7 @@ shape_drop(void)
           shape_unset();
           ++current.x;
      }
-     score += FRAMEH - current.x;
+     score += (FRAMEH - current.x)*2;
 
      return;
 }
