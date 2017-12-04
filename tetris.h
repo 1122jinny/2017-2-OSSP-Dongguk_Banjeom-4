@@ -47,8 +47,8 @@
 /* Frame dimension */
 #define FRAMEW 23
 #define FRAMEH 20
-#define FRAMEW_NB 16
-#define FRAMEH_NB 6
+#define FRAMEW_NB 17
+#define FRAMEH_NB 8
 
 /* Shapes position */
 #define N_POS ((current.pos < 3) ? current.pos + 1 : 0)
