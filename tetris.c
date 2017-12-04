@@ -277,8 +277,7 @@ quit(void)
      return;
 }
 
-int
-main(int argc, char **argv)
+int main(int argc, char **argv)
 {
 <<<<<<< HEAD
      init(); //게임 진행중에도 게임 사용법 보여
