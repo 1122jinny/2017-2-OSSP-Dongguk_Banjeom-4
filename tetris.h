@@ -75,7 +75,7 @@ typedef struct
 } shape_t;
 
 /* Color enum */
-enum { Black, Blue, Red, Magenta, White, Green, Cyan, Yellow, Test, Border, Score, ColLast };
+enum { Black, Blue, Red, Magenta, White, Green, Cyan, Yellow, Test, Test_2, Border, Score, ColLast };
 
 /* Prototypes */
 
@@ -109,7 +109,7 @@ int check_possible_pos(int, int);
 void get_key_event(void);
 /* Variables */
 
-const int shapes[9][4][5][2];
+const int shapes[10][4][5][2];
 struct itimerval tv;
 struct termios back_attr;
 shape_t current;

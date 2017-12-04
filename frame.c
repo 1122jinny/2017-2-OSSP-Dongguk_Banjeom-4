@@ -38,7 +38,7 @@
  * [1]: +y
  * [2]: What shape position choose for a perfect position in the box
  */
-const int sattr[9][3] = {{1,3}, {1,1}, {1,2,1}, {1,2}, {0,2}, {1,2}, {1,2}, {1,2} ,{1,2}}; // Nextbox에서 출력되는 위치 고정
+const int sattr[10][3] = {{1,3}, {1,1}, {1,2,1}, {1,2}, {0,2}, {1,2}, {1,2}, {1,2} ,{1,2}, {2,3,0}}; // Nextbox에서 출력되는 위치 고정
 
 void frame_init(void)        //프레임의 색깔지정과 그리기	
 {
