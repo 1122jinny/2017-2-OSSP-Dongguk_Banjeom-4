@@ -104,7 +104,8 @@ void frame_refresh(void)      //테트리스 테두리
 		    else
 		    printxy(frame[i][j], i, j, "□");
 		}
-	  }
+    }
+    
      return;
 }
 

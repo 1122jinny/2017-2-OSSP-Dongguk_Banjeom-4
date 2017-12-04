@@ -33,6 +33,7 @@
 #include "tetris.h"
 #include "config.h"
 #include <fcntl.h>
+#include <time.h>
 //#include "fmod_studio.h"
 //#include "fmod.h"
 //오류떠서 주석처리했습니다.
@@ -240,11 +241,11 @@ quit(char * name)
      {
       
       fprintf(wp,"%d %s",score,name);
-      printf("\n\n\t축하합니다. %s님이 최고점수 %d 점을 달성했습니다.\n\n",name,score);
+      printf("\n\n\t축하합니다. %s님이 레벨 %d, 최고점수 %d 점을 달성했습니다.\n\n",name,level,score);
      }
     else
        {
-        printf("\n\n\t수고하셨습니다. %s님의 점수는: %d입니다.\n\n",name, score);
+        printf("\n\n\t수고하셨습니다. %s님의 레벨 %d, 점수는: %d입니다.\n\n",name,level, score);
        }
        fclose(rp);
        fclose(wp); 
@@ -272,22 +273,22 @@ int
 main(int argc, char **argv)
 {
   level = 1;
+  
      char myname[10];
      first(myname);
      init(); //게임 진행중에도 게임 사용법 보여
      frame_init();
      frame_nextbox_init();;
-	 //여기까지 게임을 초기화하는 부분
+      //여기까지 게임을 초기화하는 부분
      current.last_move = False;
-
-     while(running)
+      while(running)
      {
-          get_key_event();
-          shape_set();
-          frame_refresh();
-          shape_go_down();
+      get_key_event();
+      shape_set();
+      frame_refresh();
+      shape_go_down();
      }//이것이 게임루프의 주축이 되는 부분
-
+    
      quit(myname); 
      
 
