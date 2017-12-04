@@ -33,6 +33,13 @@
 #include "tetris.h"
 #include "config.h"
 #include <fcntl.h>
+<<<<<<< HEAD
+=======
+#include <time.h>
+//#include "fmod_studio.h"
+//#include "fmod.h"
+//오류떠서 주석처리했습니다.
+>>>>>>> 9f7dac0731270433e7845823fdeec74ec1d5f527
 
 
 /* Functions */
@@ -129,6 +136,7 @@ get_key_event(void)
      case KEY_DROP_SHAPE:           shape_drop();                       break;
      case KEY_PAUSE:                while(getchar() != KEY_PAUSE);      break;
      case KEY_QUIT:                 running = False;                    break;
+     case 'Q':                      running = False;                    break; //대문자 Q를 사용할 때 종료
      }
 
      return;
@@ -146,6 +154,18 @@ arrange_score(int l)
      case 4: score += 1200; break; /* Four lines */
      }
 
+<<<<<<< HEAD
+=======
+     
+     if (score >=100)  //레벨 추가
+      level=2;
+     if (score >=400)
+      level=3;
+     if (score >=700)
+      level=4;
+     if(score >= 1000)
+      level =5;
+>>>>>>> 9f7dac0731270433e7845823fdeec74ec1d5f527
      lines += l;
 
      DRAW_SCORE();
@@ -217,7 +237,23 @@ quit(void)
 
      set_cursor(True); //이 함수로인해 터미널창 커서가 숨김에서 풀린다
      tcsetattr(0, TCSANOW, &back_attr); //TCSANOW는 즉시속성을 변경을 의미, 
+<<<<<<< HEAD
     
+=======
+  
+     if(best_sc<score)
+     {
+      
+      fprintf(wp,"%d %s",score,name);
+      printf("\n\n\t축하합니다. %s님이 레벨 %d, 최고점수 %d 점을 달성했습니다.\n\n",name,level,score);
+     }
+    else
+       {
+        printf("\n\n\t수고하셨습니다. %s님의 레벨 %d, 점수는: %d입니다.\n\n",name,level, score);
+       }
+       fclose(rp);
+       fclose(wp); 
+>>>>>>> 9f7dac0731270433e7845823fdeec74ec1d5f527
 	 printf("\n\n\n\t\t\tpress enter to end the game!\n");
 	 while (1) {
 		 end = getchar();
@@ -244,21 +280,36 @@ quit(void)
 int
 main(int argc, char **argv)
 {
+<<<<<<< HEAD
      init(); //게임 진행중에도 게임 사용법 보여
      frame_init();
     // frame_nextbox_init();
 	 //여기까지 게임을 초기화하는 부분
+=======
+  level = 1;
+  
+     char myname[10];
+     first(myname);
+     init(); //게임 진행중에도 게임 사용법 보여
+     frame_init();
+     frame_nextbox_init();;
+      //여기까지 게임을 초기화하는 부분
+>>>>>>> 9f7dac0731270433e7845823fdeec74ec1d5f527
      current.last_move = False;
-
-     while(running)
+      while(running)
      {
-          get_key_event();
-          shape_set();
-          frame_refresh();
-          shape_go_down();
+      get_key_event();
+      shape_set();
+      frame_refresh();
+      shape_go_down();
      }//이것이 게임루프의 주축이 되는 부분
+<<<<<<< HEAD
 
      quit(); 
+=======
+    
+     quit(myname); 
+>>>>>>> 9f7dac0731270433e7845823fdeec74ec1d5f527
      
 
      return 0;

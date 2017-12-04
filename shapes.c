@@ -39,7 +39,7 @@
  */
 
 
-const int shapes[9][4][5][2] =
+const int shapes[10][4][5][2] =
 {
      /* O */
      /* 정사각형 */
@@ -110,7 +110,14 @@ const int shapes[9][4][5][2] =
           {{1,1},{1,1},{1,1},{1,1},{1,1}},
           {{1,1},{1,1},{1,1},{1,1},{1,1}},
           {{1,1},{1,1},{1,1},{1,1},{1,1}}
-     }
+     },
+    
+     {
+          {{0,0},{0,1},{1,1},{0,1},{0,1}},
+          {{1,0},{1,1},{0,1},{0,1},{0,1}},
+          {{1,1},{0,1},{0,0},{0,0},{0,0}},
+          {{1,0},{0,0},{0,1},{0,1},{0,1}}
+     },
 };
 
 
@@ -200,7 +207,7 @@ shape_new(void)
      current.num = current.next;
      current.x = 1; // 새로운 블록이 생성되는 위치
      current.y = (FRAMEW / 2) - 1;
-     current.next = nrand(0, 8);
+     current.next = nrand(0, 9);
      // current.next = nrand(0, 8);을 하면 투명 블록이 생성된다.
      /* 다음 블록을 표시해주는 프레임을 초기화시킨다 */
      frame_nextbox_refresh();
@@ -218,7 +225,7 @@ void
 shape_go_down(void)
 {
 
-     shape_unset();
+        shape_unset();
 
      /* Fall the shape else; collision with the ground or another shape
       * then stop it and create another */
@@ -229,7 +236,9 @@ shape_go_down(void)
 	이동이 불가능한 상태라면 이동을 중지하고 새로운 Shape를 생성한다.
      */
      if(!check_possible_pos(current.x + 1, current.y))
-          ++current.x;
+          {
+                  ++current.x;
+          }
      else
           if(current.x > 2)
                shape_new();
