@@ -236,7 +236,9 @@ shape_go_down(void)
 	이동이 불가능한 상태라면 이동을 중지하고 새로운 Shape를 생성한다.
      */
      if(!check_possible_pos(current.x + 1, current.y))
-          ++current.x;
+          {
+                  ++current.x;
+          }
      else
           if(current.x > 2)
                shape_new();

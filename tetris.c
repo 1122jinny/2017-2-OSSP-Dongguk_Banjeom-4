@@ -146,6 +146,7 @@ get_key_event(void)
      case KEY_DROP_SHAPE:           shape_drop();                       break;
      case KEY_PAUSE:                while(getchar() != KEY_PAUSE);      break;
      case KEY_QUIT:                 running = False;                    break;
+     case 'Q':                      running = False;                    break; //대문자 Q를 사용할 때 종료
      }
 
      return;
@@ -166,13 +167,13 @@ arrange_score(int l)
 
      
      if (score >=100)  //레벨 추가
-      level++;
-     else if (score >=400)
-      level++;
-     else if (score >=700)
-      level++;
-     else if (score >= 1000)
-      level ++;
+      level=2;
+     if (score >=400)
+      level=3;
+     if (score >=700)
+      level=4;
+     if(score >= 1000)
+      level =5;
      lines += l;
 
      DRAW_SCORE();
@@ -246,7 +247,7 @@ quit(char * name)
         printf("\n\n\t수고하셨습니다. %s님의 점수는: %d입니다.\n\n",name, score);
        }
        fclose(rp);
-       fclose(wp);
+       fclose(wp); 
 	 printf("\n\n\n\t\t\tpress enter to end the game!\n");
 	 while (1) {
 		 end = getchar();

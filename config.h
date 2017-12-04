@@ -17,6 +17,5 @@
 #define KEY_PAUSE 'p'
 #define KEY_QUIT  'q'
 
-
 /* Timing in milisecond */
 #define TIMING 300000
