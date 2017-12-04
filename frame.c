@@ -38,7 +38,7 @@
  * [1]: +y
  * [2]: What shape position choose for a perfect position in the box
  */
-const int sattr[10][3] = {{1,3}, {1,1}, {1,2,1}, {1,2}, {0,2}, {1,2}, {1,2}, {1,2} ,{1,2}, {2,3,0}}; // Nextbox에서 출력되는 위치 고정
+const int sattr[10][3] = {{1,2}, {1,2}, {0,2,1}, {0,2}, {0,2}, {1,2}, {1,2}, {1,2} ,{1,2}, {1,2,0}}; // Nextbox에서 출력되는 위치 고정
 
 void frame_init(void)        //프레임의 색깔지정과 그리기	
 {
@@ -134,7 +134,26 @@ frame_nextbox_refresh(void)       //다음나올 상자와 모양
      /* Draw the frame */
      for(i = 0; i < FRAMEH_NB + 1; ++i)              //테트리스 다음나올 모양 테두리 그려줌 
           for(j = 0; j < FRAMEW_NB + 1; ++j)
-               printxy(frame_nextbox[i][j], i, j + FRAMEW + 3, " ");
+          {
+		if(j%2 == 1)
+		{	
+                    printxy(frame_nextbox[i][j], i, j + FRAMEW + 3, " ");
+		}
+		else 
+		{
+		    if(i == 0 || i == FRAMEH_NB || j == 0 || j == FRAMEW_NB)
+		    {
+		     	printxy(frame_nextbox[i][j], i, j + FRAMEW + 3, " ");
+		    }
+		    else if(frame_nextbox[i][j] != 0)
+		    {
+		    	printxy(frame_nextbox[i][j], i, j + FRAMEW + 3, "□");
+	 	    }
+		    else
+			printxy(frame_nextbox[i][j], i, j + FRAMEW + 3, " ");
+		}
+	  }
+
 
      return;
 }

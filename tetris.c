@@ -33,19 +33,30 @@
 #include "tetris.h"
 #include "config.h"
 #include <fcntl.h>
-<<<<<<< HEAD
-=======
 #include <time.h>
 //#include "fmod_studio.h"
 //#include "fmod.h"
 //오류떠서 주석처리했습니다.
->>>>>>> 9f7dac0731270433e7845823fdeec74ec1d5f527
-
 
 /* Functions */
+
+char* first(char * name)
+{
+  
+  char start;
+  printf("\n\n\t당신의 이름은? ");
+  scanf("%s",name);
+  printf("\n\n\t\t\tpress enter to enter game!");	 //tab세번이 적절
+  while (1) {
+    start = getchar();
+    if (start == '\n')break;
+  }
+  return name;
+}
 void
 init(void)
 {
+  
      struct sigaction siga;
      struct termios term;
 
@@ -59,8 +70,8 @@ init(void)
      term.c_lflag &= ~(ICANON|ECHO);
      tcsetattr(0, TCSANOW, &term);
     /*스타트함수를 init에 통합했다*/
-     char start;
      //set_cursor(False); //커서없애줌
+ 
      printxy(0, FRAMEH_NB + 2, FRAMEW + 3, "Score :");
      printxy(0, FRAMEH_NB + 3, FRAMEW + 3, "Lines :");
      printxy(0, FRAMEH_NB + 4, FRAMEW + 3, "Left  : ←"); 
@@ -72,11 +83,10 @@ init(void)
      printxy(0, FRAMEH_NB + 10, FRAMEW + 3, "Quit  : q"); 
     //게임 시작하기 전에 안내를 한번 해줌
     
-    printf("\n\n\t\t\tpress enter to enter game!");	 //tab세번이 적절
-     while (1) {
-       start = getchar();
-       if (start == '\n')break;
-     }
+ 
+  
+
+    
      clear_term(); //화면 지움
      /* Make rand() really random :) */
      srand(getpid());
@@ -89,6 +99,7 @@ init(void)
      current.next = nrand(0, 7);//다음 블록의 종류를 정함
 
      /* Score(오른쪽에 표시되는 안내사항을 보여주는 */
+     printxy(0, FRAMEH_NB + 1, FRAMEW + 3, "Level :");
      printxy(0, FRAMEH_NB + 2, FRAMEW + 3, "Score :");
      printxy(0, FRAMEH_NB + 3, FRAMEW + 3, "Lines :");
      printxy(0, FRAMEH_NB + 4, FRAMEW + 3, "Left  : ←"); 
@@ -113,7 +124,7 @@ init(void)
      tv.it_value.tv_usec = TIMING;
      sig_handler(SIGALRM);
 
-
+     
 
      return;
 }
@@ -145,7 +156,8 @@ get_key_event(void)
 void
 arrange_score(int l)
 {
-     /* 클리어한 라인에따라 점수부여. 여기서 의문점이 5줄이상일때 에러가 발생하는지 */
+     /* 클리어한 라인에따라 점수부여. 여기서 의문점이 5줄이상일때 에러가 발생하는지
+     테트리스는 5줄이상 못깹니다.  */
      switch(l)
      {
      case 1: score += 40;   break; /* One line */
@@ -154,8 +166,6 @@ arrange_score(int l)
      case 4: score += 1200; break; /* Four lines */
      }
 
-<<<<<<< HEAD
-=======
      
      if (score >=100)  //레벨 추가
       level=2;
@@ -165,7 +175,6 @@ arrange_score(int l)
       level=4;
      if(score >= 1000)
       level =5;
->>>>>>> 9f7dac0731270433e7845823fdeec74ec1d5f527
      lines += l;
 
      DRAW_SCORE();
@@ -213,7 +222,7 @@ check_possible_pos(int x, int y)
 }
 
 void
-quit(void)
+quit(char * name)
 {
   FILE *rp;
     rp = fopen ("score.txt","r");
@@ -221,25 +230,12 @@ quit(void)
     fscanf(rp,"%d",&best_sc);
   FILE *wp;
     wp = fopen ("score.txt","w");
-    if(best_sc<score)
-    {
-     fprintf(wp,"%d",score);
-     printf("\n\n\t수고하셨습니다. 최고점수 %d 점을 달성했습니다.\n\n",score);
-    }
-   else
-      {
-       printf("\n\n\t수고하셨습니다. 당신의 점수는: %d입니다.\n\n", score);
-      }
-      fclose(rp);
-      fclose(wp);
+
 	 char end;
      frame_refresh(); /* Redraw a last time the frame */
 
      set_cursor(True); //이 함수로인해 터미널창 커서가 숨김에서 풀린다
      tcsetattr(0, TCSANOW, &back_attr); //TCSANOW는 즉시속성을 변경을 의미, 
-<<<<<<< HEAD
-    
-=======
   
      if(best_sc<score)
      {
@@ -253,16 +249,12 @@ quit(void)
        }
        fclose(rp);
        fclose(wp); 
->>>>>>> 9f7dac0731270433e7845823fdeec74ec1d5f527
 	 printf("\n\n\n\t\t\tpress enter to end the game!\n");
 	 while (1) {
 		 end = getchar();
 		 if (end == '\n')break;
 	 }
-   system("clear");
-  
-     
-     printf("\n\n\t수고하셨습니다. 당신의 점수는: %d입니다.\n", score);
+   system("clear"); 
 
 	 printf("\n\n\t\t\tpress enter to end the game!\n");
 	 while (1) {
@@ -277,14 +269,9 @@ quit(void)
      return;
 }
 
-int main(int argc, char **argv)
+int
+main(int argc, char **argv)
 {
-<<<<<<< HEAD
-     init(); //게임 진행중에도 게임 사용법 보여
-     frame_init();
-    // frame_nextbox_init();
-	 //여기까지 게임을 초기화하는 부분
-=======
   level = 1;
   
      char myname[10];
@@ -293,7 +280,6 @@ int main(int argc, char **argv)
      frame_init();
      frame_nextbox_init();;
       //여기까지 게임을 초기화하는 부분
->>>>>>> 9f7dac0731270433e7845823fdeec74ec1d5f527
      current.last_move = False;
       while(running)
      {
@@ -302,13 +288,8 @@ int main(int argc, char **argv)
       frame_refresh();
       shape_go_down();
      }//이것이 게임루프의 주축이 되는 부분
-<<<<<<< HEAD
-
-     quit(); 
-=======
     
      quit(myname); 
->>>>>>> 9f7dac0731270433e7845823fdeec74ec1d5f527
      
 
      return 0;

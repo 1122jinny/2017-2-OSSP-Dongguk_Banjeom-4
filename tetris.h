@@ -47,7 +47,7 @@
 /* Frame dimension */
 #define FRAMEW 23
 #define FRAMEH 20
-#define FRAMEW_NB 17
+#define FRAMEW_NB 18
 #define FRAMEH_NB 8
 
 /* Shapes position */
@@ -75,7 +75,7 @@ typedef struct
 } shape_t;
 
 /* Color enum */
-enum { Black, Blue, Red, Magenta, White, Green, Cyan, Yellow, Test, Test_2, Border, Score, ColLast };
+enum { Black, Blue, Red, Magenta, White, Green, Cyan, Yellow, Test, Test_2, Test_3, Border, Score, ColLast };
 
 /* Prototypes */
 

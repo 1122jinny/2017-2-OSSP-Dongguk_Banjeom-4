@@ -71,6 +71,7 @@ set_color(int color)	//색을 지정
      case Yellow:  bg = 43; break;
      case Test:    bg = 40; break;
      case Test_2:  bg = 41; break;
+     case Test_3:  bg = 42; break;
      case Border:  bg = 47; break;
      case Score:   fg = 37; bg = 49; break;
      }
