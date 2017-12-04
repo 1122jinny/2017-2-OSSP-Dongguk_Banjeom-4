@@ -225,7 +225,7 @@ void
 shape_go_down(void)
 {
 
-     shape_unset();
+        shape_unset();
 
      /* Fall the shape else; collision with the ground or another shape
       * then stop it and create another */
