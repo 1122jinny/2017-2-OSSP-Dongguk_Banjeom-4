@@ -85,10 +85,11 @@ void frame_nextbox_init(void)      //다음 나올 모양의 테두리 색깔 �
 
 void frame_refresh(void)      //테트리스 테두리 
 {
-     int i, j;
+     int i, j, k;
 
 
      for(i = 0; i < FRAMEH + 1; ++i)
+     {
           for(j = 0; j < FRAMEW + 1; ++j)
 	  {
 		if(j%2 == 1)
@@ -103,14 +104,30 @@ void frame_refresh(void)      //테트리스 테두리
 		    }
 		    else if(frame[i][j] != 0)
 		    {
-		    	printxy(frame[i][j], i, j, "□");
+			printxy(frame[i][j], i, j, "□");
 	 	    }
 		    else
 			printxy(frame[i][j], i, j, " ");
 		}
-    }
-    
+          }
+     }
+     /*
+     for(i = 0; i < FRAMEH + 1; ++i)
+     {
+          for(j = 0; j < FRAMEW + 1; ++j)
+	  {
+     	  	if(frame[i][j] != 0)
+		{
+			for(k = 0; k < FRAMEH + 1; ++k)
+     			{
+          			printxy(frame[k][j], k, j, "□");
+     			}
+		}
+	  }
+     }
+     */
      return;
+      
 }
 
 void
