@@ -80,7 +80,8 @@ init(void)
      printxy(0, FRAMEH_NB + 7, FRAMEW + 3, "Down  : ↓"); 
      printxy(0, FRAMEH_NB + 8, FRAMEW + 3, "Drop  : Space Bar");
      printxy(0, FRAMEH_NB + 9, FRAMEW + 3, "Pause : p"); 
-     printxy(0, FRAMEH_NB + 10, FRAMEW + 3, "Quit  : q"); 
+     printxy(0, FRAMEH_NB + 10, FRAMEW + 3, "Revive : r");
+     printxy(0, FRAMEH_NB + 11, FRAMEW + 3, "Quit  : q");  
     //게임 시작하기 전에 안내를 한번 해줌
     
  
@@ -93,6 +94,7 @@ init(void)
 
      /* Init variables */
      score = lines = 0;
+
      running = True;	//true일 경우에 게임의 축이 되는 루프가 계속 돌아가고 false일 경우 루프가 break되고 quit함수가 호출되어 종료된다
      current.y = (FRAMEW / 2) - 1; 
      current.num = nrand(0, 7); //7가지블록랜덤
@@ -108,7 +110,9 @@ init(void)
      printxy(0, FRAMEH_NB + 7, FRAMEW + 3, "Down  : ↓"); 
      printxy(0, FRAMEH_NB + 8, FRAMEW + 3, "Drop  : Space Bar");
      printxy(0, FRAMEH_NB + 9, FRAMEW + 3, "Pause : p"); 
-     printxy(0, FRAMEH_NB + 10, FRAMEW + 3, "Quit  : q"); 
+     printxy(0, FRAMEH_NB + 10, FRAMEW + 3, "Revive : r");
+     printxy(0, FRAMEH_NB + 11, FRAMEW + 3, "Life : ");
+     printxy(0, FRAMEH_NB + 12, FRAMEW + 3, "Quit  : q"); 
      DRAW_SCORE();
 
      /* Init signal */
@@ -125,7 +129,7 @@ init(void)
      sig_handler(SIGALRM);
 
      
-
+ 
      return;
 }
 
@@ -148,8 +152,10 @@ get_key_event(void)
      case KEY_PAUSE:                while(getchar() != KEY_PAUSE);      break;
      case KEY_QUIT:                 running = False;                    break;
      case 'Q':                      running = False;                    break; //대문자 Q를 사용할 때 종료
-     case 't':                      sleep(5);                         break; //5초 정지 
-     }
+     case 'r':                      if(lifes != 0) revive();             break;
+     //case 't':                      sleep(5);                         break; //5초 정지 
+     //시간 멈추는 능력 
+     } 
 
      return;
 }
@@ -176,6 +182,7 @@ arrange_score(int l)
       level=4;
      if(score >= 1000)
       level =5;
+     
      lines += l;
 
      DRAW_SCORE();
@@ -249,7 +256,7 @@ quit(char * name)
         printf("\n\n\t수고하셨습니다. %s님의 레벨 %d, 점수는: %d입니다.\n\n",name,level, score);
        }
        fclose(rp);
-       fclose(wp); 
+       fclose(wp);
 	 printf("\n\n\n\t\t\tpress enter to end the game!\n");
 	 while (1) {
 		 end = getchar();
@@ -273,8 +280,8 @@ quit(char * name)
 int
 main(int argc, char **argv)
 {
-  level = 1;
-  
+     level = 1;
+     lifes = 2;
      char myname[10];
      first(myname);
      init(); //게임 진행중에도 게임 사용법 보여
@@ -290,7 +297,9 @@ main(int argc, char **argv)
         frame_refresh();
       shape_go_down();
       if(level==5)
-        printxy(0, FRAMEH_NB + 11, FRAMEW + 3, "***블록이 안보입니다***");
+        printxy(0, FRAMEH_NB + 13, FRAMEW + 3, "***블록이 안보입니다***");
+      //shape_ghost();
+      printf("\n\n%d",lifes);
      }//이것이 게임루프의 주축이 되는 부분
      quit(myname); 
      
