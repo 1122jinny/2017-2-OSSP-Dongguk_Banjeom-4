@@ -80,7 +80,8 @@ init(void)
      printxy(0, FRAMEH_NB + 7, FRAMEW + 3, "Down  : ↓"); 
      printxy(0, FRAMEH_NB + 8, FRAMEW + 3, "Drop  : Space Bar");
      printxy(0, FRAMEH_NB + 9, FRAMEW + 3, "Pause : p"); 
-     printxy(0, FRAMEH_NB + 10, FRAMEW + 3, "Quit  : q"); 
+     printxy(0, FRAMEH_NB + 10, FRAMEW + 3, "Revive : r");
+     printxy(0, FRAMEH_NB + 11, FRAMEW + 3, "Quit  : q");  
     //게임 시작하기 전에 안내를 한번 해줌
     
  
@@ -92,7 +93,9 @@ init(void)
      srand(getpid());
 
      /* Init variables */
-     score = lines = 0;
+     score = 0;
+      
+
      running = True;	//true일 경우에 게임의 축이 되는 루프가 계속 돌아가고 false일 경우 루프가 break되고 quit함수가 호출되어 종료된다
      current.y = (FRAMEW / 2) - 1; 
      current.num = nrand(0, 7); //7가지블록랜덤
@@ -108,7 +111,9 @@ init(void)
      printxy(0, FRAMEH_NB + 7, FRAMEW + 3, "Down  : ↓"); 
      printxy(0, FRAMEH_NB + 8, FRAMEW + 3, "Drop  : Space Bar");
      printxy(0, FRAMEH_NB + 9, FRAMEW + 3, "Pause : p"); 
-     printxy(0, FRAMEH_NB + 10, FRAMEW + 3, "Quit  : q"); 
+     printxy(0, FRAMEH_NB + 10, FRAMEW + 3, "Revive : r");
+     printxy(0, FRAMEH_NB + 11, FRAMEW + 3, "Life : ");
+     printxy(0, FRAMEH_NB + 12, FRAMEW + 3, "Quit  : q"); 
      DRAW_SCORE();
 
      /* Init signal */
@@ -125,7 +130,7 @@ init(void)
      sig_handler(SIGALRM);
 
      
-
+ 
      return;
 }
 
@@ -148,7 +153,10 @@ get_key_event(void)
      case KEY_PAUSE:                while(getchar() != KEY_PAUSE);      break;
      case KEY_QUIT:                 running = False;                    break;
      case 'Q':                      running = False;                    break; //대문자 Q를 사용할 때 종료
-     }
+     case 'r':                      if(lifes != 0) revive();             break;
+     //case 't':                      sleep(5);                         break; //5초 정지 
+     //시간 멈추는 능력 
+     }  
 
      return;
 }
@@ -175,6 +183,7 @@ arrange_score(int l)
       level=4;
      if(score >= 1000)
       level =5;
+     printf("\n\n\n%d",l);
      lines += l;
 
      DRAW_SCORE();
@@ -201,6 +210,7 @@ check_plain_line(void)
           }
           c = 0;
      }
+    
      arrange_score(nl);
      frame_refresh();
 
@@ -248,7 +258,7 @@ quit(char * name)
         printf("\n\n\t수고하셨습니다. %s님의 레벨 %d, 점수는: %d입니다.\n\n",name,level, score);
        }
        fclose(rp);
-       fclose(wp); 
+       fclose(wp);
 	 printf("\n\n\n\t\t\tpress enter to end the game!\n");
 	 while (1) {
 		 end = getchar();
@@ -268,12 +278,35 @@ quit(char * name)
 
      return;
 }
+/*
+void init_music(){
+  // Initialize music.
+  if (SDL_Init(SDL_INIT_AUDIO) < 0) {
+    fprintf(stderr, "unable to initialize SDL\n");
+    exit(EXIT_FAILURE);
+  }
+  if (Mix_Init(MIX_INIT_MP3) != MIX_INIT_MP3) {
+    fprintf(stderr, "unable to initialize SDL_mixer\n");
+    exit(EXIT_FAILURE);
+  }
+  if (Mix_OpenAudio(MIX_DEFAULT_FREQUENCY, MIX_DEFAULT_FORMAT, 2, 1024) != 0) {
+    fprintf(stderr, "unable to initialize audio\n");
+    exit(EXIT_FAILURE);
+  }
+  Mix_AllocateChannels(1); // only need background music
+  music = Mix_LoadMUS("tetris.mp3");
+  if (music) {
+    Mix_PlayMusic(music, -1);
+  }
+}
+
+*/
 
 int
 main(int argc, char **argv)
 {
-  level = 1;
-  
+     level = 1;
+     
      char myname[10];
      first(myname);
      init(); //게임 진행중에도 게임 사용법 보여
@@ -281,14 +314,20 @@ main(int argc, char **argv)
      frame_nextbox_init();;
       //여기까지 게임을 초기화하는 부분
      current.last_move = False;
+     lifes = 2;
+     lines = 0;
       while(running)
      {
+       
       get_key_event();
       shape_set();
-      frame_refresh();
+      if(level<5)       //레벨 5가 되면 블록이 안보임
+        frame_refresh();
       shape_go_down();
+      if(level==5)
+        printxy(0, FRAMEH_NB + 13, FRAMEW + 3, "***블록이 안보입니다***");
+      //shape_ghost();
      }//이것이 게임루프의 주축이 되는 부분
-    
      quit(myname); 
      
 

@@ -59,6 +59,7 @@
      printf("\033[%d;%dH %d", FRAMEH_NB + 2, FRAMEW + 10, level);   \
      printf("\033[%d;%dH %d", FRAMEH_NB + 3, FRAMEW + 10, score);   \
      printf("\033[%d;%dH %d", FRAMEH_NB + 4, FRAMEW + 10, lines);   \
+     printf("\033[%d;%dH %d", FRAMEH_NB + 12, FRAMEW + 10, lifes);   \
      set_color(0);
 
 /* Bool type */
@@ -101,6 +102,8 @@ void shape_go_down(void);
 void shape_set_position(int);
 void shape_move(int);
 void shape_drop(void);
+void shape_ghost(void);
+void revive(void);
 
 /* tetris.c */
 void arrange_score(int l);
@@ -118,7 +121,8 @@ int frame_nextbox[FRAMEH_NB][FRAMEW_NB];
 int score;
 int lines;
 int level;
+int lifes;
 
 Bool running;
 
-
+//Mix_Music *music; //음악 구조체
