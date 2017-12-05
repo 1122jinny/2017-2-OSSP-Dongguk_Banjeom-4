@@ -269,6 +269,29 @@ quit(char * name)
 
      return;
 }
+/*
+void init_music(){
+  // Initialize music.
+  if (SDL_Init(SDL_INIT_AUDIO) < 0) {
+    fprintf(stderr, "unable to initialize SDL\n");
+    exit(EXIT_FAILURE);
+  }
+  if (Mix_Init(MIX_INIT_MP3) != MIX_INIT_MP3) {
+    fprintf(stderr, "unable to initialize SDL_mixer\n");
+    exit(EXIT_FAILURE);
+  }
+  if (Mix_OpenAudio(MIX_DEFAULT_FREQUENCY, MIX_DEFAULT_FORMAT, 2, 1024) != 0) {
+    fprintf(stderr, "unable to initialize audio\n");
+    exit(EXIT_FAILURE);
+  }
+  Mix_AllocateChannels(1); // only need background music
+  music = Mix_LoadMUS("tetris.mp3");
+  if (music) {
+    Mix_PlayMusic(music, -1);
+  }
+}
+
+*/
 
 int
 main(int argc, char **argv)
