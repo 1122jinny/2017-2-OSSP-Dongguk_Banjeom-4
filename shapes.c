@@ -243,11 +243,15 @@ shape_ghost(void)
 void
 revive(void)
 {
-        for(int i = 1; i < FRAMEH ; ++i)
-          for(int j = 2; j <FRAMEW  -1 ; ++j)
+        for(int i = 1; i < FRAMEH ; ++i){
+          for(int j = 2; j <FRAMEW  -1 ; ++j){
                 frame[i][j] = 0;
+          }
+        }
 
-                lifes --;
+        
+ 
+        lifes --;
 }
 
 void

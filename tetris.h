@@ -125,4 +125,4 @@ int lifes;
 
 Bool running;
 
-
+//Mix_Music *music; //음악 구조체
