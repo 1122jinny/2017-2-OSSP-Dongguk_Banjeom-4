@@ -32,8 +32,7 @@
 
 #include "tetris.h"
 #include "config.h"
-#include <fcntl.h>
-#include <time.h>
+
 
 /* Functions */
 
