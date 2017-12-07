@@ -179,7 +179,6 @@ arrange_score(int l)
       level=4;
      if(score >= 1000)
       level =5;
-     printf("\n\n\n%d",l);
      lines += l;
 
      DRAW_SCORE();
