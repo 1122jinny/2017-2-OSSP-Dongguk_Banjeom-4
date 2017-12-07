@@ -302,13 +302,14 @@ void init_music(){
 	// set our global static variables
 	audio_pos = wav_buffer; // copy sound buffer
 	audio_len = wav_length; // copy file length
-/* 이거쓰면 더 이상함
-wav_spec.freq = 44100;
-wav_spec.format = AUDIO_F32;
+
+/*
+wav_spec.freq = 48000;
+wav_spec.format = AUDIO_S16LSB;
 wav_spec.channels = 2;
 wav_spec.samples = 4096;
-wav_spec.callback = my_audio_callback;*/
-
+wav_spec.callback = my_audio_callback;
+*/
 	/* Open the audio device */
 	if ( SDL_OpenAudio(&wav_spec, NULL) < 0 ){
 	  fprintf(stderr, "Couldn't open audio: %s\n", SDL_GetError());
