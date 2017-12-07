@@ -113,10 +113,10 @@ const int shapes[10][4][5][2] =
      },
     
      {
-          {{0,0},{1,0},{1,1},{1,1},{1,1}},
+          {{0,0},{0,1},{1,1},{0,1},{0,1}},
           {{1,0},{1,1},{0,1},{0,1},{0,1}},
           {{1,1},{0,1},{0,0},{0,0},{0,0}},
-          {{0,1},{0,0},{1,0},{1,0},{1,0}}
+          {{1,0},{0,0},{0,1},{0,1},{0,1}}
      },
 };
 
@@ -223,25 +223,40 @@ shape_new(void)
 }
 
 void 
-shape_ghost(void)
+block_down()
 {
-        for(int i = 1; i < FRAMEH ; ++i)
-          for(int j = 1; j <FRAMEW - 1 ; ++j)
+         int ranNum = nrand(2,21);
+                for(int i = 1; i < FRAMEH ; ++i)
                 {
-                        frame[i][j]= 1;
-                        /*if(frame[i][j]!=0)
-                               {
-                                        frame[i][j+1] = 1;
-                                        //frame[i][j] = 0;
-                               }*/
-                }
-        //for(int k = 1; k < FRAMEH + 1; ++k)
-                //frame[19][k] = 1;
-          
+                        for(int j = 2; j <FRAMEW - 1 ; ++j)
+                        {
+                        if(frame[i][j]!=0&& i>1)
+                              {
+                                        frame[i-1][j] = 3;  
+                                        frame[i][j] = 0;
+                               }
+                        }
+                        
+                } 
+                   for(int j = 2; j <FRAMEW - 1 ; ++j)
+                        {              
+                                frame[19][j] = 3;
+                        }
+                        
+                if(ranNum%2 == 1)
+                 {
+                         frame[19][ranNum] = 0;
+                         frame[19][ranNum-1] = 0;
+                 }
+                 else
+                 {
+                         frame[19][ranNum] = 0;
+                         frame[19][ranNum+1] = 0;
+                 }
 } 
 
 void
-revive(void)
+revive(void) //테트리스 안에 모든 블럭을 초기화 해주는 함수
 {
         for(int i = 1; i < FRAMEH ; ++i){
           for(int j = 2; j <FRAMEW  -1 ; ++j){
