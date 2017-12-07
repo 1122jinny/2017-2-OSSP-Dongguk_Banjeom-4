@@ -223,11 +223,16 @@ shape_new(void)
 }
 
 void 
-block_down()
+block_down() 
 {
+        /*
+        현재까지 있는 블럭을 모두 한칸 위로 올린 후 
+        맨 아랫줄에 랜덤으로 한칸이 비어있는 블럭 
+        한줄을 생성해준다. 
+        */
          int ranNum = nrand(2,21);
-                for(int i = 1; i < FRAMEH ; ++i)
-                {
+                for(int i = 1; i < FRAMEH ; ++i) //이거는 블럭이 있는지 찾아서
+                {                                //있으면 한줄을 올려준다.
                         for(int j = 2; j <FRAMEW - 1 ; ++j)
                         {
                         if(frame[i][j]!=0&& i>1)
@@ -238,13 +243,17 @@ block_down()
                         }
                         
                 } 
-                   for(int j = 2; j <FRAMEW - 1 ; ++j)
+                   for(int j = 2; j <FRAMEW - 1 ; ++j) //맨 아랫줄을 모두 채워준다.
                         {              
                                 frame[19][j] = 3;
                         }
                         
-                if(ranNum%2 == 1)
+                if(ranNum%2 == 1) 
                  {
+                         /*
+                         맨 아랫줄 중 랜덤으로 하나를 비우게 한다.
+                         블럭이 2칸 기준이므로 홀수 짝수 나눠서 해준다.
+                         */
                          frame[19][ranNum] = 0;
                          frame[19][ranNum-1] = 0;
                  }
