@@ -37,8 +37,8 @@
 #include <signal.h>
 #include <termios.h>
 #include <sys/time.h>
-//#include <SDL2/SDL.h>
-//#include <SDL2/SDL_audio.h>
+#include <SDL2/SDL.h>
+#include <SDL2/SDL_audio.h>
 
 #define MUS_PATH "game_start.wav"   
 /* Expension factor of shapes */
