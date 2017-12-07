@@ -344,7 +344,6 @@ void my_audio_callback(void *userdata, Uint8 *stream, int len) {
 	audio_len -= len;
 }
 
-
 int
 main(int argc, char **argv)
 {
