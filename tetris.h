@@ -37,10 +37,10 @@
 #include <signal.h>
 #include <termios.h>
 #include <sys/time.h>
-// #include <AL/al.h>
-// #include <AL/alut.h>
+#include <SDL2/SDL.h>
+#include <SDL2/SDL_audio.h>
 
-
+#define MUS_PATH "game_start.wav"   
 /* Expension factor of shapes */
 #define EXP_FACT 2
 
@@ -121,4 +121,11 @@ int level;
 
 Bool running;
 
-//Mix_Music *music; //음악 구조체
+// prototype for our audio callback
+// see the implementation for more information
+void my_audio_callback(void *userdata, Uint8 *stream, int len);
+
+// variable declarations
+static Uint8 *audio_pos; // global pointer to the audio buffer to be played
+static Uint32 audio_len; // remaining length of the sample we have to play
+

@@ -34,9 +34,6 @@
 #include "config.h"
 #include <fcntl.h>
 #include <time.h>
-//#include "fmod_studio.h"
-//#include "fmod.h"
-//오류떠서 주석처리했습니다.
 
 /* Functions */
 
@@ -269,29 +266,75 @@ quit(char * name)
 
      return;
 }
-/*
+
 void init_music(){
   // Initialize music.
-  if (SDL_Init(SDL_INIT_AUDIO) < 0) {
-    fprintf(stderr, "unable to initialize SDL\n");
-    exit(EXIT_FAILURE);
-  }
-  if (Mix_Init(MIX_INIT_MP3) != MIX_INIT_MP3) {
-    fprintf(stderr, "unable to initialize SDL_mixer\n");
-    exit(EXIT_FAILURE);
-  }
-  if (Mix_OpenAudio(MIX_DEFAULT_FREQUENCY, MIX_DEFAULT_FORMAT, 2, 1024) != 0) {
-    fprintf(stderr, "unable to initialize audio\n");
-    exit(EXIT_FAILURE);
-  }
-  Mix_AllocateChannels(1); // only need background music
-  music = Mix_LoadMUS("tetris.mp3");
-  if (music) {
-    Mix_PlayMusic(music, -1);
-  }
+// Initialize SDL.
+	if (SDL_Init(SDL_INIT_AUDIO) < 0)
+			exit;
+	printf("init complite");
+	// local variables
+	static Uint32 wav_length; // length of our sample
+	static Uint8 *wav_buffer; // buffer containing our audio file
+	static SDL_AudioSpec wav_spec; // the specs of our piece of music
+	
+	
+	/* Load the WAV */
+	// the specs, length and buffer of our wav are filled
+	if( SDL_LoadWAV(MUS_PATH, &wav_spec, &wav_buffer, &wav_length) == NULL ){
+	  
+	fprintf(stderr, "Could not open test.wav: %s\n", SDL_GetError());
+  exit(-1);
+}//return 1;
+	
+	printf("loadwav\n");
+	// set the callback function
+	wav_spec.callback = my_audio_callback;
+	wav_spec.userdata = NULL;
+	// set our global static variables
+	audio_pos = wav_buffer; // copy sound buffer
+	audio_len = wav_length; // copy file length
+/* 이거쓰면 더 이상함
+wav_spec.freq = 44100;
+wav_spec.format = AUDIO_F32;
+wav_spec.channels = 2;
+wav_spec.samples = 4096;
+wav_spec.callback = my_audio_callback;*/
+
+	/* Open the audio device */
+	if ( SDL_OpenAudio(&wav_spec, NULL) < 0 ){
+	  fprintf(stderr, "Couldn't open audio: %s\n", SDL_GetError());
+	  exit(-1);
+	}
+	
+	/* Start playing */
+	SDL_PauseAudio(0);
+	
+	printf("start play\n");
+	// wait until we're don't playing
+	while ( audio_len > 0 ) {
+		SDL_Delay(100); 
+	}
+	
+	printf("before shut\n");
+	// shut everything down
+	SDL_CloseAudio();
+	SDL_FreeWAV(wav_buffer);
+
+}
+void my_audio_callback(void *userdata, Uint8 *stream, int len) {
+	
+	if (audio_len ==0)
+		return;
+	
+	len = ( len > audio_len ? audio_len : len );
+	//SDL_memcpy (stream, audio_pos, len); 					// simply copy from one buffer into the other
+	SDL_MixAudio(stream, audio_pos, len, SDL_MIX_MAXVOLUME);// mix from one buffer into another
+	
+	audio_pos += len;
+	audio_len -= len;
 }
 
-*/
 
 int
 main(int argc, char **argv)
@@ -299,6 +342,7 @@ main(int argc, char **argv)
   level = 1;
   
      char myname[10];
+     init_music();
      first(myname);
      init(); //게임 진행중에도 게임 사용법 보여
      frame_init();
@@ -316,7 +360,6 @@ main(int argc, char **argv)
         printxy(0, FRAMEH_NB + 11, FRAMEW + 3, "***블록이 안보입니다***");
      }//이것이 게임루프의 주축이 되는 부분
      quit(myname); 
-     
 
      return 0;
 }
