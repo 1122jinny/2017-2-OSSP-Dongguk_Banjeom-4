@@ -360,17 +360,24 @@ main(int argc, char **argv)
      current.last_move = False;
      lifes = 2;
      lines = 0;
+     int n =1;
       while(running)
      {
-       
+      int ranNum = nrand(1,200);
       get_key_event();
       shape_set();
-      if(level<5)       //레벨 5가 되면 블록이 안보임
+      if(score<2000)       //레벨 5가 되면 블록이 안보임
         frame_refresh();
       shape_go_down();
-      if(level==5)
+      if(score> 2000)
         printxy(0, FRAMEH_NB + 13, FRAMEW + 3, "***블록이 안보입니다***");
-      //shape_ghost();
+      if(n >=1 && score >= 100)
+        {
+          block_down();
+          n--;
+        }
+        if(ranNum == 108 )
+          n++;
      }//이것이 게임루프의 주축이 되는 부분
      quit(myname); 
 

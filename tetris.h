@@ -37,8 +37,6 @@
 #include <signal.h>
 #include <termios.h>
 #include <sys/time.h>
-#include <fcntl.h>
-#include <time.h>
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_audio.h>
 
@@ -104,7 +102,7 @@ void shape_go_down(void);
 void shape_set_position(int);
 void shape_move(int);
 void shape_drop(void);
-void shape_ghost(void);
+void block_down(void);
 void revive(void);
 
 /* tetris.c */
