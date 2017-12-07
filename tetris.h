@@ -92,6 +92,7 @@ void sig_handler(int);
 void frame_init(void);
 void frame_nextbox_init(void);
 void frame_refresh(void);
+void frame_preview(void);
 void frame_nextbox_refresh(void);
 
 /* shapes.c */

@@ -133,6 +133,51 @@ void frame_refresh(void)      //테트리스 테두리
       
 }
 
+void frame_preview(void)
+{
+     int i, j;
+     int temp;
+
+     for(i = 0; i < FRAMEH + 1; ++i)
+     {
+          for(j = 0; j < FRAMEW + 1; ++j)
+	  {
+		    if(j%2 == 1)
+		    {	
+                  	printxy(frame[i][j], i, j, " ");
+		    }
+
+		    else 
+		    {
+		    	if(i == 0 || i == FRAMEH || j == 0 || j == FRAMEW - 1)
+		    	{
+   		     	   printxy(frame[i][j], i, j, " ");
+		   	}
+			else if(frame[i][j] != 0)
+			{
+				//for(int k = i; k < FRAMEH - 4; ++k)
+				for(int k = i; k < FRAMEH - 1; ++k)
+				{	
+					//if(current.num == 0)
+					//if(frame[k][current.y + 2] != 0)
+					{
+						printxy(frame[k + 1][j], k + 1, j, "□");
+						//printxy(0, I + 5, j, "□");
+						//printxy(0, i + 2, current.y + 2, "□");
+					}
+				}	
+			}
+	 	    }
+
+          }
+     }
+
+
+
+     return;
+
+}
+
 void
 frame_nextbox_refresh(void)       //다음나올 상자와 모양 
 {

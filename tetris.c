@@ -363,22 +363,28 @@ main(int argc, char **argv)
      int n =1;
       while(running)
      {
-      int ranNum = nrand(1,200);
-      get_key_event();
-      shape_set();
-      if(score<2000)       //레벨 5가 되면 블록이 안보임
-        frame_refresh();
-      shape_go_down();
-      if(score> 2000)
-        printxy(0, FRAMEH_NB + 13, FRAMEW + 3, "***블록이 안보입니다***");
-      if(n >=1 && score >= 100)
+      	int ranNum = nrand(1,200);
+      	get_key_event();
+      	shape_set();
+      	if(score<2000)       //레벨 5가 되면 블록이 안보임
+		frame_refresh();
+      	
+      	frame_preview();
+     	shape_go_down();
+
+
+      	if(score> 2000)
+	       printxy(0, FRAMEH_NB + 13, FRAMEW + 3, "***블록이 안보입니다***");
+
+      	if(n >=1 && score >= 100)
         {
-          block_down();
-          n--;
+          	block_down();
+          	n--;
         }
+
         if(ranNum == 108 )
-          n++;
-     }//이것이 게임루프의 주축이 되는 부분
+          	n++;
+     }	//이것이 게임루프의 주축이 되는 부분
      quit(myname); 
 
      return 0;
