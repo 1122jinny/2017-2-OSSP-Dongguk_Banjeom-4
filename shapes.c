@@ -113,10 +113,10 @@ const int shapes[10][4][5][2] =
      },
     
      {
-          {{0,0},{0,1},{1,1},{0,1},{0,1}},
+          {{0,0},{1,0},{1,1},{1,1},{1,1}},
           {{1,0},{1,1},{0,1},{0,1},{0,1}},
           {{1,1},{0,1},{0,0},{0,0},{0,0}},
-          {{1,0},{0,0},{0,1},{0,1},{0,1}}
+          {{0,1},{0,0},{1,0},{1,0},{1,0}}
      },
 };
 
@@ -221,6 +221,39 @@ shape_new(void)
 
      return;
 }
+
+void 
+shape_ghost(void)
+{
+        for(int i = 1; i < FRAMEH ; ++i)
+          for(int j = 1; j <FRAMEW - 1 ; ++j)
+                {
+                        frame[i][j]= 1;
+                        /*if(frame[i][j]!=0)
+                               {
+                                        frame[i][j+1] = 1;
+                                        //frame[i][j] = 0;
+                               }*/
+                }
+        //for(int k = 1; k < FRAMEH + 1; ++k)
+                //frame[19][k] = 1;
+          
+} 
+
+void
+revive(void)
+{
+        for(int i = 1; i < FRAMEH ; ++i){
+          for(int j = 2; j <FRAMEW  -1 ; ++j){
+                frame[i][j] = 0;
+          }
+        }
+
+        
+ 
+        lifes --;
+}
+
 void
 shape_go_down(void)
 {
