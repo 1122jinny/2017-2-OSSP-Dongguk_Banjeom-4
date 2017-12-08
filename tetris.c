@@ -288,7 +288,7 @@ void init_music(){
 // Initialize SDL.
 	if (SDL_Init(SDL_INIT_AUDIO) < 0)
 			exit;
-	printf("init complite");
+	printf("Loading...");
 	// local variables
 	static Uint32 wav_length; // length of our sample
 	static Uint8 *wav_buffer; // buffer containing our audio file
@@ -303,7 +303,7 @@ void init_music(){
   exit(-1);
 }//return 1;
 	
-	printf("loadwav\n");
+	printf("...");
 	// set the callback function
 	wav_spec.callback = my_audio_callback;
 	wav_spec.userdata = NULL;
@@ -327,13 +327,13 @@ wav_spec.callback = my_audio_callback;
 	/* Start playing */
 	SDL_PauseAudio(0);
 	
-	printf("start play\n");
+	printf("...");
 	// wait until we're don't playing
 	while ( audio_len > 0 ) {
 		SDL_Delay(100); 
 	}
 	
-	printf("before shut\n");
+	printf("...");
 	// shut everything down
 	SDL_CloseAudio();
 	SDL_FreeWAV(wav_buffer);
