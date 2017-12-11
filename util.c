@@ -69,7 +69,7 @@ set_color(int color)	//색을 지정
      case Green:   bg = 42; break;
      case Cyan:    bg = 46; break;
      case Yellow:  bg = 43; break;
-     case Test:    bg = 40; break;
+     case Test:    bg = 41; break;
      case Test_2:  bg = 41; break;
      case Test_3:  bg = 42; break;
      case Border:  bg = 47; break;

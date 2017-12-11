@@ -158,7 +158,7 @@ void frame_preview(void)
 				    for(int k = i; k < FRAMEH - 1; ++k) 
 			    	{
                         if(frame[k+1][j] == 0) //블록부분의 영역이 바뀌는걸 막아줌
-                            printxy(frame[k + 1][j], k + 1, j, "□");
+                            printxy(frame[k + 1][j], k + 1, j, "▽");
 				    }	
 			    }
 	 	    }
