@@ -358,13 +358,13 @@ shape_drop(void)
     {
        exit;
     }
-    sound("slip.wav",300);
+    
      while(!check_possible_pos(current.x + 1, current.y))
      {
           shape_unset();
           ++current.x;
      }
      score += (FRAMEH - current.x)*2;
-
+sound("slip.wav",700);
      return;
 }
