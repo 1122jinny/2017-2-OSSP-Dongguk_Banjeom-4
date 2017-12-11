@@ -140,7 +140,7 @@ void frame_preview(void)
 
      for(i = 0; i < FRAMEH + 1; ++i)
      {
-          for(j = 0; j < FRAMEW + 1; ++j)
+          for(j = 0; j < FRAMEW - 1; ++j)
 	  {
 		    if(j%2 == 1)
 		    {	
@@ -160,7 +160,9 @@ void frame_preview(void)
 			    	{	
 					//if(current.num == 0)
 					//if(frame[k][current.y + 2] != 0)
-						printxy(frame[k + 1][j+1], k + 1, j, "□");
+                    
+                            printxy(frame[k + 1][j], k + 1, j, "□");
+                        
 						//printxy(0, I + 5, j, "□");
 						//printxy(0, i + 2, current.y + 2, "□");
 				    }	

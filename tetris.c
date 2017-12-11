@@ -230,11 +230,10 @@ void
 quit(char * name)
 {
   FILE *rp;
-    rp = fopen ("score.txt","r");
+    rp = fopen ("score.txt","a+");
     int best_sc;
     fscanf(rp,"%d",&best_sc);
-  FILE *wp;
-    wp = fopen ("score.txt","w");
+  
 
 	 char end;
      frame_refresh(); /* Redraw a last time the frame */
@@ -244,8 +243,19 @@ quit(char * name)
   
      if(best_sc<score)
      {
-      
-      fprintf(wp,"%d %s",score,name);
+        printf("\n\n\n%d ",best_sc);
+      if(best_sc != 0)
+        {
+          FILE *wp;
+          wp = fopen ("score.txt","w");
+          fprintf(wp,"%d %s",score,name);
+          fclose(wp);
+        }
+      else
+          {
+            fprintf(rp,"%d %s",score,name);
+            printf("\n\n\nsad");
+          }
       printf("\n\n\t축하합니다. %s님이 레벨 %d, 최고점수 %d 점을 달성했습니다.\n\n",name,level,score);
      }
     else
@@ -253,7 +263,6 @@ quit(char * name)
         printf("\n\n\t수고하셨습니다. %s님의 레벨 %d, 점수는: %d입니다.\n\n",name,level, score);
        }
        fclose(rp);
-       fclose(wp);
 	 printf("\n\n\n\t\t\tpress enter to end the game!\n");
 	 while (1) {
 		 end = getchar();
@@ -365,11 +374,10 @@ main(int argc, char **argv)
       	get_key_event();
       	shape_set();
       	if(score<2000)       //레벨 5가 되면 블록이 안보임
-		frame_refresh();
-      	
-      	frame_preview();
-     	shape_go_down();
-
+	  	    frame_refresh();
+      
+        frame_preview();
+     	  shape_go_down();
 
       	if(score> 2000)
 	       printxy(0, FRAMEH_NB + 13, FRAMEW + 3, "***블록이 안보입니다***");
