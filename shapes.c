@@ -354,6 +354,11 @@ shape_move(int n)
 void
 shape_drop(void)
 {
+        if(SDL_Init(SDL_INIT_AUDIO) < 0)
+    {
+       exit;
+    }
+    sound("slip.wav",300);
      while(!check_possible_pos(current.x + 1, current.y))
      {
           shape_unset();

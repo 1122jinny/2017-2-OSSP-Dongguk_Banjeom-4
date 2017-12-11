@@ -116,8 +116,6 @@ void get_key_event(void);
 void quit(char * name);
 void music(const char * filename, int len);
 void sound(const char * filename, int len);
-void *back_gm();
-void *play_game();
 /* Variables */
 
 const int shapes[10][4][5][2];

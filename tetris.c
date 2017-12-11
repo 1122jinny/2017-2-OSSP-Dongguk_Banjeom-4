@@ -32,9 +32,6 @@
 
 #include "tetris.h"
 #include "config.h"
-
-  pthread_t bgm, game;
-  int thread1, thread2;
   
 
 /* Functions */
@@ -186,6 +183,11 @@ arrange_score(int l)
 void
 check_plain_line(void)
 {
+if(SDL_Init(SDL_INIT_AUDIO) < 0)
+    {
+       exit;
+    }
+    
      int i, j, k, f, c = 0, nl = 0;
 
      for(i = 1; i < FRAMEH; ++i)
@@ -196,13 +198,13 @@ check_plain_line(void)
           if(!c)
           {
                ++nl;
+               sound("nope.wav",800);
                for(k = i - 1; k > 1; --k)
                     for(f = 1; f < FRAMEW; ++f)
                          frame[k + 1][f] = frame[k][f];
           }
           c = 0;
      }
-    
      arrange_score(nl);
      frame_refresh();
 
@@ -259,6 +261,7 @@ void quit(char * name)
         printf("\n\n\t수고하셨습니다. %s님의 레벨 %d, 점수는: %d입니다.\n\n",name,level, score);
        }
        fclose(rp);
+       
 	 printf("\n\n\t\t\tpress enter to end the game!\n");
 	 while (1) {
 		 end = getchar();
@@ -298,8 +301,31 @@ void sound(const char * filename, int len){
   freeAudio(sound);
 }
 
-void play_game(){
-  int n =1;
+
+int
+main(int argc, char **argv)
+{
+    /*변수들*/
+    level = 1;
+    int n =1;
+     current.last_move = False;
+     lifes = 2;
+     lines = 0;
+     char myname[10]; 
+    /* Initialize only SDL Audio on default device */
+    if(SDL_Init(SDL_INIT_AUDIO) < 0)
+    {
+       exit;
+    }
+         
+     first(myname);
+      //초기음악
+     sound("test.wav", 2000);
+     init(); //게임 진행중에도 게임 사용법 보여
+     frame_init();
+     frame_nextbox_init();;
+      //여기까지 게임을 초기화하는 부분
+    
       while(running)
      {
       	int ranNum = nrand(1,300);
@@ -326,30 +352,7 @@ void play_game(){
           	n++;
      }	//이것이 게임루프의 주축이 되는 부분
      
-
-}
-
-int
-main(int argc, char **argv)
-{
-    level = 1;
-    /* Initialize only SDL Audio on default device */
-    if(SDL_Init(SDL_INIT_AUDIO) < 0)
-    {
-       exit;
-    }
-     char myname[10];     
-     first(myname);
-      //초기음악
-     sound("test.wav", 2000);
-     init(); //게임 진행중에도 게임 사용법 보여
-     frame_init();
-     frame_nextbox_init();;
-      //여기까지 게임을 초기화하는 부분
-     current.last_move = False;
-     lifes = 2;
-     lines = 0;
-     play_game(); //게임루프
+     sound("violin.wav",9000);
       SDL_Quit();
       quit(myname);
      return 0;
