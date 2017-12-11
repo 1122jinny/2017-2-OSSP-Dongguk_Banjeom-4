@@ -33,6 +33,9 @@
 #include "tetris.h"
 #include "config.h"
 
+  pthread_t bgm, game;
+  int thread1, thread2;
+  
 
 /* Functions */
 
@@ -49,8 +52,7 @@ char* first(char * name)
   }
   return name;
 }
-void
-init(void)
+void init(void)
 {
   
      struct sigaction siga;
@@ -80,10 +82,6 @@ init(void)
      printxy(0, FRAMEH_NB + 11, FRAMEW + 3, "Quit  : q");  
     //게임 시작하기 전에 안내를 한번 해줌
     
- 
-  
-
-    
      clear_term(); //화면 지움
      /* Make rand() really random :) */
      srand(getpid());
@@ -91,7 +89,6 @@ init(void)
      /* Init variables */
      score = 0;
       
-
      running = True;	//true일 경우에 게임의 축이 되는 루프가 계속 돌아가고 false일 경우 루프가 break되고 quit함수가 호출되어 종료된다
      current.y = (FRAMEW / 2) - 1; 
      current.num = nrand(0, 7); //7가지블록랜덤
@@ -226,8 +223,7 @@ check_possible_pos(int x, int y)
      return c;
 }
 
-void
-quit(char * name)
+void quit(char * name)
 {
   FILE *rp;
     rp = fopen ("score.txt","a+");
@@ -263,13 +259,6 @@ quit(char * name)
         printf("\n\n\t수고하셨습니다. %s님의 레벨 %d, 점수는: %d입니다.\n\n",name,level, score);
        }
        fclose(rp);
-	 printf("\n\n\n\t\t\tpress enter to end the game!\n");
-	 while (1) {
-		 end = getchar();
-		 if (end == '\n')break;
-	 }
-   system("clear"); 
-
 	 printf("\n\n\t\t\tpress enter to end the game!\n");
 	 while (1) {
 		 end = getchar();
@@ -283,91 +272,34 @@ quit(char * name)
      return;
 }
 
-void init_music(){
-  // Initialize music.
-// Initialize SDL.
-	if (SDL_Init(SDL_INIT_AUDIO) < 0)
-			exit;
-	printf("Loading...");
-	// local variables
-	static Uint32 wav_length; // length of our sample
-	static Uint8 *wav_buffer; // buffer containing our audio file
-	static SDL_AudioSpec wav_spec; // the specs of our piece of music
-	
-	
-	/* Load the WAV */
-	// the specs, length and buffer of our wav are filled
-	if( SDL_LoadWAV(MUS_PATH, &wav_spec, &wav_buffer, &wav_length) == NULL ){
-	  
-	fprintf(stderr, "Could not open test.wav: %s\n", SDL_GetError());
-  exit(-1);
-}//return 1;
-	
-	printf("...");
-	// set the callback function
-	wav_spec.callback = my_audio_callback;
-	wav_spec.userdata = NULL;
-	// set our global static variables
-	audio_pos = wav_buffer; // copy sound buffer
-	audio_len = wav_length; // copy file length
+void music(const char * filename, int len){
+ 
 
-/*
-wav_spec.freq = 48000;
-wav_spec.format = AUDIO_S16LSB;
-wav_spec.channels = 2;
-wav_spec.samples = 4096;
-wav_spec.callback = my_audio_callback;
-*/
-	/* Open the audio device */
-	if ( SDL_OpenAudio(&wav_spec, NULL) < 0 ){
-	  fprintf(stderr, "Couldn't open audio: %s\n", SDL_GetError());
-	  exit(-1);
-	}
-	
-	/* Start playing */
-	SDL_PauseAudio(0);
-	
-	printf("...");
-	// wait until we're don't playing
-	while ( audio_len > 0 ) {
-		SDL_Delay(100); 
-	}
-	
-	printf("...");
-	// shut everything down
-	SDL_CloseAudio();
-	SDL_FreeWAV(wav_buffer);
+    /* Init Simple-SDL2-Audio */
+    initAudio();
+    Audio * music = createAudio(filename, 1, SDL_MIX_MAXVOLUME);
+    playMusicFromMemory(music, SDL_MIX_MAXVOLUME);
+    SDL_Delay(len);
 
+    /* End Simple-SDL2-Audio */
+    endAudio();
+
+    /* Important to free audio after ending Simple-SDL2-Audio because they might be referenced still */
+    freeAudio(music);
+
+    
 }
-void my_audio_callback(void *userdata, Uint8 *stream, int len) {
-	
-	if (audio_len ==0)
-		return;
-	
-	len = ( len > audio_len ? audio_len : len );
-	//SDL_memcpy (stream, audio_pos, len); 					// simply copy from one buffer into the other
-	SDL_MixAudio(stream, audio_pos, len, SDL_MIX_MAXVOLUME);// mix from one buffer into another
-	
-	audio_pos += len;
-	audio_len -= len;
+void sound(const char * filename, int len){
+  initAudio();
+  Audio * sound = createAudio(filename, 0, SDL_MIX_MAXVOLUME / 2);
+  playSoundFromMemory(sound, SDL_MIX_MAXVOLUME);
+  SDL_Delay(len);
+  endAudio();
+  freeAudio(sound);
 }
 
-int
-main(int argc, char **argv)
-{
-     level = 1;
-     
-     char myname[10];
-     init_music();
-     first(myname);
-     init(); //게임 진행중에도 게임 사용법 보여
-     frame_init();
-     frame_nextbox_init();;
-      //여기까지 게임을 초기화하는 부분
-     current.last_move = False;
-     lifes = 2;
-     lines = 0;
-     int n =1;
+void play_game(){
+  int n =1;
       while(running)
      {
       	int ranNum = nrand(1,300);
@@ -386,14 +318,39 @@ main(int argc, char **argv)
 
       	if(n >=1 && score >= 100)
         {
-          	block_down();
           	n--;
+             printf("block_down\n");
         }
 
         if(ranNum == 108 )
           	n++;
      }	//이것이 게임루프의 주축이 되는 부분
-     quit(myname); 
+     
 
+}
+
+int
+main(int argc, char **argv)
+{
+    level = 1;
+    /* Initialize only SDL Audio on default device */
+    if(SDL_Init(SDL_INIT_AUDIO) < 0)
+    {
+       exit;
+    }
+     char myname[10];     
+     first(myname);
+      //초기음악
+     sound("test.wav", 2000);
+     init(); //게임 진행중에도 게임 사용법 보여
+     frame_init();
+     frame_nextbox_init();;
+      //여기까지 게임을 초기화하는 부분
+     current.last_move = False;
+     lifes = 2;
+     lines = 0;
+     play_game(); //게임루프
+      SDL_Quit();
+      quit(myname);
      return 0;
 }

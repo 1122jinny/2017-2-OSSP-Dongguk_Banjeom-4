@@ -36,11 +36,11 @@
 #include <unistd.h>
 #include <signal.h>
 #include <termios.h>
+#include <string.h>
 #include <sys/time.h>
 #include <SDL2/SDL.h>
-#include <SDL2/SDL_audio.h>
-
-#define MUS_PATH "game_start.wav"   
+#include "audio.h"
+  
 /* Expension factor of shapes */
 #define EXP_FACT 2
 
@@ -107,10 +107,17 @@ void block_down(void);
 void revive(void);
 
 /* tetris.c */
+char* first(char * name);
+void init(void);
 void arrange_score(int l);
 void check_plain_line(void);
 int check_possible_pos(int, int);
 void get_key_event(void);
+void quit(char * name);
+void music(const char * filename, int len);
+void sound(const char * filename, int len);
+void *back_gm();
+void *play_game();
 /* Variables */
 
 const int shapes[10][4][5][2];
@@ -125,12 +132,4 @@ int level;
 int lifes;
 
 Bool running;
-
-// prototype for our audio callback
-// see the implementation for more information
-void my_audio_callback(void *userdata, Uint8 *stream, int len);
-
-// variable declarations
-static Uint8 *audio_pos; // global pointer to the audio buffer to be played
-static Uint32 audio_len; // remaining length of the sample we have to play
 
