@@ -153,18 +153,12 @@ void frame_preview(void)
 		    	{
    		     	   printxy(frame[i][j], i, j, " ");
 		   	    }
-			    else if(frame[i][j] != 0)
+			    else if(frame[i][j] != 0) //위에 블럭이 있을때
 			    {
-				//for(int k = i; k < FRAMEH - 4; ++k)
-				    for(int k = i; k < FRAMEH - 1; ++k)
-			    	{	
-					//if(current.num == 0)
-					//if(frame[k][current.y + 2] != 0)
-                    
+				    for(int k = i; k < FRAMEH - 1; ++k) 
+			    	{
+                        if(frame[k+1][j] == 0) //블록부분의 영역이 바뀌는걸 막아줌
                             printxy(frame[k + 1][j], k + 1, j, "□");
-                        
-						//printxy(0, I + 5, j, "□");
-						//printxy(0, i + 2, current.y + 2, "□");
 				    }	
 			    }
 	 	    }

@@ -370,13 +370,15 @@ main(int argc, char **argv)
      int n =1;
       while(running)
      {
-      	int ranNum = nrand(1,200);
+      	int ranNum = nrand(1,300);
       	get_key_event();
       	shape_set();
       	if(score<2000)       //레벨 5가 되면 블록이 안보임
-	  	    frame_refresh();
+	  	    {
+            frame_refresh();
+            frame_preview();
+          }
       
-        frame_preview();
      	  shape_go_down();
 
       	if(score> 2000)
