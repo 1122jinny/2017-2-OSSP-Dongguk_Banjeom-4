@@ -365,6 +365,6 @@ shape_drop(void)
           ++current.x;
      }
      score += (FRAMEH - current.x)*2;
-sound("slip.wav",700);
+sound("slip.wav",300);
      return;
 }

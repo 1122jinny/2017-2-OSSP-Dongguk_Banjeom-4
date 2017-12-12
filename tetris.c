@@ -346,7 +346,7 @@ main(int argc, char **argv)
         {
           	n--;
              block_down();
-             sound("nope.wav", 800);
+             sound("nope.wav", 400);
         }
 
         if(ranNum == 108 )
