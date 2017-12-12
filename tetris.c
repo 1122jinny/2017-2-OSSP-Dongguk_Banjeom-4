@@ -198,7 +198,7 @@ if(SDL_Init(SDL_INIT_AUDIO) < 0)
           if(!c)
           {
                ++nl;
-               sound("nope.wav",800);
+               sound("pop.wav",400);
                for(k = i - 1; k > 1; --k)
                     for(f = 1; f < FRAMEW; ++f)
                          frame[k + 1][f] = frame[k][f];
@@ -345,7 +345,8 @@ main(int argc, char **argv)
       	if(n >=1 && score >= 100)
         {
           	n--;
-             printf("block_down\n");
+             block_down();
+             sound("nope.wav", 800);
         }
 
         if(ranNum == 108 )
